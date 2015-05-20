@@ -24,7 +24,7 @@ public class DataSource implements Serializable {
 
   // URL per la connessione alla base di dati e' formato dai seguenti
   // componenti: <protocollo>://<host del server>/<nome base di dati>.
-  private String url = "jdbc:postgresql://dbserver.scienze.univr.it/did2014";
+  private String url = "jdbc:postgresql://dbserver.scienze.univr.it/dblab90";
 
   // Driver da utilizzare per la connessione e l'esecuzione delle query.
   private String driver = "org.postgresql.Driver";
@@ -41,7 +41,7 @@ public class DataSource implements Serializable {
 //    + "FROM corsostudi "
 //    + "WHERE id=?";
 
-  // recupera la/e facoltà di un particolare corso di studi
+  // recupera la/e facolta' di un particolare corso di studi
 //  private String csf =
 //    "SELECT DISTINCT f.nome "
 //    + "FROM facolta f INNER JOIN corsoinfacolta csf "
@@ -205,7 +205,7 @@ public class DataSource implements Serializable {
 //  }
 
   /**
-   * Metodo per il recupero della/e facoltà di appartenenza del corso di studi
+   * Metodo per il recupero della/e facolta' di appartenenza del corso di studi
    * con l'id specificato.
    *
    * @param id

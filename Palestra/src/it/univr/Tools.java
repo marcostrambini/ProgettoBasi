@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -15,11 +17,11 @@ public class Tools {
 	static String[] nomi_femminili = {"Agnese", "Alba","Alice","Anita","Alessandra","Anna","Arianna","Ambra",
 		"Azzurra","Angelica","Annalisa","Aria","Astrid","Ambrosia","Adelaide","Alexandra","Aurora","Barbara","Beatrice",
 		"Benedetta","Camilla","Candida","Carola","Cassandra","Cassiopea","Caterina","Celeste","Chantal","Clara",
-		"Clarissa","Claudia","Clementina","Cloe","Dalila","Daniela","Deborah","Delfina","Desirée","Denise","Dharma",
+		"Clarissa","Claudia","Clementina","Cloe","Dalila","Daniela","Deborah","Delfina","Desiree","Denise","Dharma",
 		"Diana","Diletta","Domitilla","Dorotea","Donatella","Edy","Edith","Elena","Eleonora","Elettra","Elisabetta",
 		"Elisabeth","Eloisa","Elaine","Emily","Erica","Ester","Evelyne","Fanny","Flora","Gabriella","Gaia","Giada",
 		"Ginevra","Gioia","Giulia","Gloria","Helena","Ines","Irene","Iris","Isabella","Jasmine","Jessica","Jillian",
-		"Layla","Leila","Letizia","Liliana","Lizabeth","Lorena","Lority","Luna","Maia","Manuela","Marianna","Marilù",
+		"Layla","Leila","Letizia","Liliana","Lizabeth","Lorena","Lority","Luna","Maia","Manuela","Marianna","Marilu",
 		"Martina","Melania","Melissa","Micaela","Micol","Miranda","Miriam","Monica","Morena","Morgana","Nabila",
 		"Nadia","Naomi","Nicole","Nicoletta","Ninfa","Nives","Olimpia","Ornella","Ottavia","Paola","Penelope","Priscilla",
 		"Rebecca","Rossella","Sabina","Sabrina","Sara","Serena","Shana","Sharon","Shirley","Sibilla","Simona","Soledad",
@@ -31,10 +33,10 @@ public class Tools {
 		"Antonio","Bartolomeo","Battista","Benedetto","Bernardo","Cesare","Claudio","Corrado","Cristopher",
 		"Daniele","Davide","Domenico","Edoardo","Efrem","Emanuele","Emiliano","Enrico","Ermes","Eros",
 		"Ettore","Fabrizio","Federico","Fernando","Filippo","Francesco","Gabriele","Giacomo","Gianluca",
-		"Gioele","Giordano","Giosuè","Giovanni","Gregorio","Hector","Igor","Isacco","Ismaele","Ivan",
+		"Gioele","Giordano","Giosue'","Giovanni","Gregorio","Hector","Igor","Isacco","Ismaele","Ivan",
 		"Jacopo","Jonathan","Joseph","Joshua","Leandro","Leonardo","Lorenzo","Loris","Luca","Manuele",
 		"Marco","Mariano","Martino","Massimiliano","Massimo","Mathias","Matteo","Mattia","Maurizio",
-		"Michele","Michelangelo","Moreno","Moris","Mosé","Narciso","Nathan","Nicholas","Nicola","Nicol",
+		"Michele","Michelangelo","Moreno","Moris","Mose'","Narciso","Nathan","Nicholas","Nicola","Nicol",
 		"Noah","Oscar","Paolo","Peter","Raffaele","Renato","Riccardo","Roberto","Romeo","Rossano",
 		"Roy","Salvatore","Samuele","Samuel","Sasha","Saverio","Sebastiano","Sebastian","Serafino","Silvano",
 		"Silvestro","Simone","Sirio","Stefano","Teodoro","Thierry","Thomas","Tommaso","Umberto",
@@ -94,7 +96,7 @@ public class Tools {
 	}
 	
 	
-	static String getDateRandom() {
+	static java.util.Date getDateRandom() throws ParseException {
         GregorianCalendar gc = new GregorianCalendar();
         int start = 1980;
         int end = 2000;
@@ -102,8 +104,12 @@ public class Tools {
         gc.set(gc.YEAR, year);
         int dayOfYear = randBetween(1, gc.getActualMaximum(gc.DAY_OF_YEAR));
         gc.set(gc.DAY_OF_YEAR, dayOfYear);
-        return (gc.get(gc.DAY_OF_MONTH) + "/" + (gc.get(gc.MONTH)+1) + "/" +  gc.get(gc.YEAR));
-       
+        String dataString = (gc.get(gc.DAY_OF_MONTH) + "/" + (gc.get(gc.MONTH)+1) + "/" +  gc.get(gc.YEAR));
+        
+        java.util.Date data = null;
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		data =  formatter.parse(dataString);
+		return (java.util.Date) data;
     }
 
 	public static int randBetween(int start, int end) {

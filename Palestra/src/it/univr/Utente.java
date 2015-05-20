@@ -5,15 +5,15 @@ import java.sql.Date;
 public class Utente {
 	private String nome;
 	private String cognome;
-	private String dn;
+	private java.util.Date dn;
 	private String mail;
 	private String login;
 	private String password;
 	
-	public Utente(String nome, String cognome, String dn, String mail, String login, String password){
+	public Utente(String nome, String cognome, java.util.Date date, String mail, String login, String password){
 		this.nome = nome;
 		this.cognome = cognome;
-		this.dn = dn;
+		this.dn = date;
 		this.mail = mail;
 		this.login = login;
 		this.password = password;
@@ -33,10 +33,10 @@ public class Utente {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
-	public String getDn() {
+	public java.util.Date getDn() {
 		return dn;
 	}
-	public void setDn(String dn) {
+	public void setDn(Date dn) {
 		this.dn = dn;
 	}
 	public String getMail() {
