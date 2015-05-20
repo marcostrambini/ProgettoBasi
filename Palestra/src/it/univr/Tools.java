@@ -1,6 +1,13 @@
 package it.univr;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Tools {
@@ -102,6 +109,76 @@ public class Tools {
 	public static int randBetween(int start, int end) {
         return start + (int)Math.round(Math.random() * (end - start));
     }
+	
+	static void scriviFile(String nomeFile, String parola)
+			throws FileNotFoundException {
+		FileOutputStream fos = new FileOutputStream(nomeFile, true);
+		PrintWriter scrivi = new PrintWriter(fos);
+		scrivi.println(parola);
+		scrivi.close();
+	}
+	
+	static void clearFile(String nomeFile) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(nomeFile);
+		pw.close();
+
+	}
+	
+	static void creaFile(String nomeFile) throws FileNotFoundException {
+		File file = new File(nomeFile);
+
+		if (file.exists())
+			System.out.println(nomeFile + " esiste gia'");
+		else {
+
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static int getAge(java.util.Date date) {
+
+	    Calendar today = Calendar.getInstance();
+	    Calendar birthDate = Calendar.getInstance();
+
+	    int age = 0;
+
+	    birthDate.setTime(date);
+	    if (birthDate.after(today)) {
+	        throw new IllegalArgumentException("Can't be born in the future");
+	    }
+
+	    age = today.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR);
+
+	    // If birth date is greater than todays date (after 2 days adjustment of leap year) then decrement age one year   
+	    if ( (birthDate.get(Calendar.DAY_OF_YEAR) - today.get(Calendar.DAY_OF_YEAR) > 3) ||
+	            (birthDate.get(Calendar.MONTH) > today.get(Calendar.MONTH ))){
+	        age--;
+
+	     // If birth date and todays date are of same month and birth day of month is greater than todays day of month then decrement age
+	    }else if ((birthDate.get(Calendar.MONTH) == today.get(Calendar.MONTH )) &&
+	              (birthDate.get(Calendar.DAY_OF_MONTH) > today.get(Calendar.DAY_OF_MONTH ))){
+	        age--;
+	    }
+
+	    return age;
+	}
+	
+	public void scriviFile(String nomeFile, ArrayList<String> parole)
+			throws FileNotFoundException {
+
+		FileOutputStream fos = new FileOutputStream(nomeFile, true);
+		PrintWriter scrivi = new PrintWriter(fos);
+		for (int i = 0; i < parole.size(); i++)
+			scrivi.println(parole.get(i));
+
+		scrivi.close();
+	}
 
 	
 	}
