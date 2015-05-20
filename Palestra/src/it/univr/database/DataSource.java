@@ -312,5 +312,17 @@ public class DataSource implements Serializable {
 //	    }
 //	    return result;
 //	  }
+  
+  public Connection getConnection(){
+	  
+	  try {
+		return DriverManager.getConnection( url, user, passwd );
+	} catch (SQLException e) {
+		System.out.println("non riesco a creare la connessione");
+		e.printStackTrace();
+		return null;
+	}
+	  
+  }
 
 }

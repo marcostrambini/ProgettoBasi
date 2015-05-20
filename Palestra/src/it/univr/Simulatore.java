@@ -1,6 +1,12 @@
 package it.univr;
 
+import it.univr.database.DataSource;
+
+import java.beans.Statement;
 import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -12,7 +18,7 @@ public class Simulatore {
 		return nomeStringa + "\n" + messaggio ;
 	}
 	
-	public static void main(String[] args) throws FileNotFoundException, java.text.ParseException {
+	public static void main(String[] args) throws FileNotFoundException, java.text.ParseException, ClassNotFoundException, SQLException {
 		String nomeFile = "ListaNomi.txt";
 		String nomeFileCsv = "ListaNomi.csv";
 		Tools.creaFile(nomeFile);
@@ -106,7 +112,26 @@ public class Simulatore {
 		System.out.println("dimensioni dell'array utente: "+listaUtenti.size());
 		System.out.println("dimensioni dell'array csv: "+listCsv.size());
 		Tools.scriviFile(nomeFile, msg);
-
+		
+		/* Parte di inserimento nel database degli utenti creati */
+		DataSource ds =  new DataSource();
+		Connection con = ds.getConnection();
+		java.sql.Statement stm = con.createStatement();
+		PreparedStatement pstm = con.prepareStatement(MyQuery.qInsertStudente);
+		stm.execute("delete from studente");
+		
+		for(int i = 0;i<listaUtenti.size();i++){
+			pstm.setString(1, listaUtenti.get(i).getNome());
+			pstm.setString(2, listaUtenti.get(i).getCognome());
+			pstm.setString(3, listaUtenti.get(i).getDn());
+			pstm.setString(4, listaUtenti.get(i).getLogin());
+			pstm.setString(5, listaUtenti.get(i).getPassword());
+			pstm.setString(6, listaUtenti.get(i).getMail());
+			pstm.execute();
+		}
+		
+		con.close();
+		/* fine alimentazione tabella */
 		
 		}
 }
