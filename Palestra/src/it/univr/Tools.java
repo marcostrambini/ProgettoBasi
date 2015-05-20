@@ -77,8 +77,17 @@ public class Tools {
 		return nome.substring(0,1).toLowerCase()+"."+cognome.toLowerCase()+"@"+domini[id];
 	}
 	
+	static String getLogin(String nome, String cognome){
+		
+		return nome.substring(0,1).toLowerCase()+"."+cognome.toLowerCase();
+	}
 	
-	static String dateRandom() {
+	static String getPassword(){
+		return "password";
+	}
+	
+	
+	static String getDateRandom() {
         GregorianCalendar gc = new GregorianCalendar();
         int start = 1980;
         int end = 2000;
@@ -94,59 +103,7 @@ public class Tools {
         return start + (int)Math.round(Math.random() * (end - start));
     }
 
-	public static void main(String[] args) {
-//		for(int i =0;i<50;i++){
-//		
-//		double randNumber1 = Math.random();
-//		double randNumber2 = Math.random();
-//		double randNumber3 = Math.random();
-//		double randNumber4 = Math.random();
-//		
-//		int id_fn = (int) (randNumber1 * nomi_femminili.length);
-//		int id_fc = (int) (randNumber2 * cognomi.length);
-//		int id_mn = (int) (randNumber3 * nomi_maschini.length);
-//		int id_mc = (int) (randNumber4 * cognomi.length);
-//
-//		
-//		System.out.println(nomi_femminili[id_fn]+" "+cognomi[id_fc]);
-//		System.out.println(nomi_maschini[id_mn]+" "+cognomi[id_mc]);
-//		}
-		System.out.println("-----------------------------------------------------------");
-		
-		ArrayList<String> listaNomi = new ArrayList<String>();
-		while(listaNomi.size()<100){
-		String nomeF = 	getNomeFemminile();
-		String cognomeF = getCognome();
-		String mailF = getMail(nomeF, cognomeF);
-		String nomeM = getNomeMaschile();
-		String cognomeM = getCognome();
-		String mailM = getMail(nomeM, cognomeM);
-		String nomeFCompleto = nomeF+" "+cognomeF+" "+mailF;
-		String nomeMCompleto = nomeM+" "+cognomeM+" "+mailM;
-		
-		if(listaNomi.contains(nomeFCompleto)){
-			nomeF = 	getNomeFemminile();
-			cognomeF = getCognome();
-			mailF = getMail(nomeF, cognomeF);
-		}else listaNomi.add(nomeFCompleto);
-		
-		if(listaNomi.contains(nomeMCompleto)){
-			nomeM = getNomeMaschile();
-			cognomeM = getCognome();
-			mailM = getMail(nomeM, cognomeM);
-		}else listaNomi.add(nomeMCompleto);
-		
-		}
-		
-		for(int i =0;i<listaNomi.size();i++)
-			System.out.println(listaNomi.get(i));
-		
-		System.out.println("dimensioni dell'array nomi: "+listaNomi.size());
-		
-		for(int i=0;i<50;i++)
-		System.out.println(dateRandom());
-		
-		}
+	
 	}
 
 
