@@ -7,11 +7,12 @@ import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+//import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 public class Simulatore {
 
@@ -27,11 +28,12 @@ public class Simulatore {
 		Tools.creaFile(nomeFileCsv);
 		Tools.clearFile(nomeFileCsv);
 
+		int nUtentiDaCreare = 100;
 
 		System.out.println("-----------------------------------------------------------");
 		ArrayList<Utente> listaUtenti = new ArrayList<Utente>();
 		ArrayList<String> listaNomi = new ArrayList<String>();
-		while(listaNomi.size()<10){
+		while(listaNomi.size()<nUtentiDaCreare){
 			String nomeF = 	Tools.getNomeFemminile();
 			String cognomeF = Tools.getCognome();
 			String mailF = Tools.getMail(nomeF, cognomeF);
@@ -58,21 +60,41 @@ public class Simulatore {
 			//			loginM = Tools.getLogin(nomeM, cognomeM);
 			//		}else listaNomi.add(nomeMCompleto);
 
-			if(listaNomi.contains(mailF)){
+//			if(listaNomi.contains(mailF)){
+//				nomeF = 	Tools.getNomeFemminile();
+//				cognomeF = Tools.getCognome();
+//				mailF = Tools.getMail(nomeF, cognomeF);
+//				loginF = Tools.getLogin(nomeF, cognomeF);
+//			}else listaNomi.add(mailF);
+//
+//			if(listaNomi.contains(mailM)){
+//				nomeM = Tools.getNomeMaschile();
+//				cognomeM = Tools.getCognome();
+//				mailM = Tools.getMail(nomeM, cognomeM);
+//				loginM = Tools.getLogin(nomeM, cognomeM);
+//			}else listaNomi.add(mailM);
+
+			
+			
+			while(listaNomi.contains(mailF)){
 				nomeF = 	Tools.getNomeFemminile();
 				cognomeF = Tools.getCognome();
 				mailF = Tools.getMail(nomeF, cognomeF);
 				loginF = Tools.getLogin(nomeF, cognomeF);
-			}else listaNomi.add(mailF);
+			}
+			
+			listaNomi.add(mailF);
 
-			if(listaNomi.contains(mailM)){
+			while(listaNomi.contains(mailM)){
 				nomeM = Tools.getNomeMaschile();
 				cognomeM = Tools.getCognome();
 				mailM = Tools.getMail(nomeM, cognomeM);
 				loginM = Tools.getLogin(nomeM, cognomeM);
-			}else listaNomi.add(mailM);
-
-
+			}
+			
+			listaNomi.add(mailM);
+			
+			
 
 			listaUtenti.add(new Utente(nomeF,cognomeF,Tools.getDateRandom(),mailF,loginF,pwd));
 			listaUtenti.add(new Utente(nomeM,cognomeM,Tools.getDateRandom(),mailM,loginM,pwd));
@@ -143,7 +165,8 @@ public class Simulatore {
 
 			PreparedStatement pstm = con.prepareStatement(MyQuery.qInsertStudente);
 			PreparedStatement pstmDocenti = con.prepareStatement(MyQuery.qInsertDocente);
-			stm.execute("delete from studente");
+			System.out.println("Cancellazione tabella iscrizioni: " + !stm.execute(" truncate table iscrizione "));
+			System.out.println("Cancellazione tabella studenti: " + !stm.execute("delete from studente"));
 
 			for(int i = 0;i<listaUtenti.size();i++){
 				
@@ -182,6 +205,55 @@ public class Simulatore {
 			}*/
 			pstmDocenti.close();
 			pstm.close();
+			
+		
+		/* iscrivo gli utenti ai corsi */
+		
+		int n_corsi = 0;
+		ResultSet rs_corsi = stm.executeQuery(MyQuery.countCorsi);
+		if(rs_corsi.next())
+		n_corsi = rs_corsi.getInt(1);
+		System.err.println("N° record nella tabella corsi: "+n_corsi);
+		
+		
+		
+		
+		
+		
+		PreparedStatement pstm2 = con.prepareStatement(MyQuery.qIscrizione);
+				
+		for(int i =0; i<listaUtenti.size();i++){
+			
+			double randNVolte = Math.random();
+			int id_nVolte = (int) (randNVolte * 2)+1;
+			
+			for(int n=0;n<id_nVolte;n++){
+				double randIDCorso = Math.random();
+				int id_corso = (int) (randIDCorso * n_corsi)+1;
+				
+				pstm2.clearParameters();
+				pstm2.setInt(1,id_corso);
+				pstm2.setString(2, listaUtenti.get(i).getMail());
+				pstm2.setDate(3, new java.sql.Date(listaUtenti.get(i).getDn().getTime()));
+				pstm2.execute();
+				System.out.println("Iscrizione avvenuta per: "+listaUtenti.get(i).getNome()+" "+listaUtenti.get(i).getCognome());
+				
+				
+			}
+			
+			
+			
+		}
+		
+		pstm2.close();
+	
+		
+	
+		
+			
+			
+			
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
