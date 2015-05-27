@@ -28,7 +28,8 @@ public class Simulatore {
 		Tools.creaFile(nomeFileCsv);
 		Tools.clearFile(nomeFileCsv);
 
-		int nUtentiDaCreare = 100;
+		int nUtentiDaCreare = 300;
+		int maxIscrizioniConsentite = 3;
 
 		System.out.println("-----------------------------------------------------------");
 		ArrayList<Utente> listaUtenti = new ArrayList<Utente>();
@@ -165,6 +166,7 @@ public class Simulatore {
 
 			PreparedStatement pstm = con.prepareStatement(MyQuery.qInsertStudente);
 			PreparedStatement pstmDocenti = con.prepareStatement(MyQuery.qInsertDocente);
+			System.out.println("Cancello le iscrizioni...");
 			System.out.println("Cancellazione tabella iscrizioni: " + !stm.execute(" truncate table iscrizione "));
 			System.out.println("Cancellazione tabella studenti: " + !stm.execute("delete from studente"));
 
@@ -176,7 +178,7 @@ public class Simulatore {
 				pstm.setString(4, listaUtenti.get(i).getLogin());
 				pstm.setString(5, listaUtenti.get(i).getPassword());
 				pstm.setString(6, listaUtenti.get(i).getMail());
-				System.out.println("Inserimento record # "+(i)+" : "+pstm.execute());
+				System.out.println("Inserimento record # "+(i)+" : "+!pstm.execute());
 				pstm.clearParameters();
 			}
 		
@@ -213,7 +215,7 @@ public class Simulatore {
 		ResultSet rs_corsi = stm.executeQuery(MyQuery.countCorsi);
 		if(rs_corsi.next())
 		n_corsi = rs_corsi.getInt(1);
-		System.err.println("N° record nella tabella corsi: "+n_corsi);
+		System.err.println("N record nella tabella corsi: "+n_corsi);
 		
 		
 		
@@ -221,15 +223,26 @@ public class Simulatore {
 		
 		
 		PreparedStatement pstm2 = con.prepareStatement(MyQuery.qIscrizione);
-				
+		
+		
+		
 		for(int i =0; i<listaUtenti.size();i++){
 			
 			double randNVolte = Math.random();
-			int id_nVolte = (int) (randNVolte * 2)+1;
 			
+			int id_nVolte = (int) (randNVolte * maxIscrizioniConsentite)+1;
+			
+			ArrayList<Integer> listaIdCorso = new ArrayList<Integer>();
 			for(int n=0;n<id_nVolte;n++){
 				double randIDCorso = Math.random();
 				int id_corso = (int) (randIDCorso * n_corsi)+1;
+				
+				listaIdCorso.add(id_corso);
+				
+				while(!listaIdCorso.contains(id_corso)){
+					id_corso = (int) (randIDCorso * n_corsi)+1;
+				}
+				
 				
 				pstm2.clearParameters();
 				pstm2.setInt(1,id_corso);
