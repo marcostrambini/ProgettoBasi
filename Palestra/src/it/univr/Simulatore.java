@@ -178,7 +178,7 @@ public class Simulatore {
 				pstm.setString(4, listaUtenti.get(i).getLogin());
 				pstm.setString(5, listaUtenti.get(i).getPassword());
 				pstm.setString(6, listaUtenti.get(i).getMail());
-				System.out.println("Inserimento record # "+(i)+" : "+!pstm.execute());
+				System.out.println("Inserimento studente # "+(i)+": "+listaUtenti.get(i).getNome()+" "+listaUtenti.get(i).getCognome()+" -> esito = "+!pstm.execute());
 				pstm.clearParameters();
 			}
 		
@@ -224,24 +224,41 @@ public class Simulatore {
 		
 		PreparedStatement pstm2 = con.prepareStatement(MyQuery.qIscrizione);
 		
-		
+		ArrayList<Integer> listaIdCorso = new ArrayList<Integer>();
 		
 		for(int i =0; i<listaUtenti.size();i++){
 			
 			double randNVolte = Math.random();
 			
 			int id_nVolte = (int) (randNVolte * maxIscrizioniConsentite)+1;
+			listaIdCorso.clear();
 			
-			ArrayList<Integer> listaIdCorso = new ArrayList<Integer>();
+			listaIdCorso.add(0);
+			
+			double randIDCorso = Math.random();
+			int id_corso = (int) (randIDCorso * n_corsi)+1; //da 1 a 4
+//			System.out.println("id corso random prima del ciclo: "+id_corso);
+			
 			for(int n=0;n<id_nVolte;n++){
-				double randIDCorso = Math.random();
-				int id_corso = (int) (randIDCorso * n_corsi)+1;
 				
-				listaIdCorso.add(id_corso);
+				boolean verificatore = true;
 				
-				while(!listaIdCorso.contains(id_corso)){
+				while(verificatore){
+				if(listaIdCorso.contains(id_corso)){
+//					System.out.println("l'id : "+id_corso+" e' contenuto nell'array, ne genero un altro");
+					randIDCorso = Math.random();
 					id_corso = (int) (randIDCorso * n_corsi)+1;
+//					System.out.println("Ho generato l'id: "+id_corso);
+					
 				}
+				else {
+					verificatore = false;
+					listaIdCorso.add(id_corso);
+//					System.out.println("Aggiungo l'id: "+id_corso+" all'array");
+				}
+				}
+				
+
 				
 				
 				pstm2.clearParameters();

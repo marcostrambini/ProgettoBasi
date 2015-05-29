@@ -33,14 +33,14 @@ public class Tools {
 		"Antonio","Bartolomeo","Battista","Benedetto","Bernardo","Cesare","Claudio","Corrado","Cristopher",
 		"Daniele","Davide","Domenico","Edoardo","Efrem","Emanuele","Emiliano","Enrico","Ermes","Eros",
 		"Ettore","Fabrizio","Federico","Fernando","Filippo","Francesco","Gabriele","Giacomo","Gianluca",
-		"Gioele","Giordano","Giosue'","Giovanni","Gregorio","Hector","Igor","Isacco","Ismaele","Ivan",
+		"Gioele","Giordano","Giosue'","Giovanni","Gregorio","Hector","Igor","Isacco","Ismaele","Ivan","JacK",
 		"Jacopo","Jonathan","Joseph","Joshua","Leandro","Leonardo","Lorenzo","Loris","Luca","Manuele",
 		"Marco","Mariano","Martino","Massimiliano","Massimo","Mathias","Matteo","Mattia","Maurizio",
 		"Michele","Michelangelo","Moreno","Moris","Mose'","Narciso","Nathan","Nicholas","Nicola","Nicol",
 		"Noah","Oscar","Paolo","Peter","Raffaele","Renato","Riccardo","Roberto","Romeo","Rossano",
 		"Roy","Salvatore","Samuele","Samuel","Sasha","Saverio","Sebastiano","Sebastian","Serafino","Silvano",
 		"Silvestro","Simone","Sirio","Stefano","Teodoro","Thierry","Thomas","Tommaso","Umberto",
-		"Ulisse","Valerio","Vincenzo","Vittorio","William",	};
+		"Ulisse","Uribe","Valerio","Vincenzo","Vittorio","William",	};
 	
 	static String[] cognomi = {"Agostini","Aiello","Albanese","Amato","Antonelli","Arena","Baldi","Barbieri",
 		"Barone","Basile","Battaglia","Bellini","Benedetti","Bernardi","Bianchi","Bianco","Brambilla",
@@ -56,7 +56,7 @@ public class Tools {
 		"Palumbo","Parisi","Pastore","Pellegrini","Pellegrino","Pepe","Perrone","Piazza","Piccolo",
 		"Pinna","Piras","Poli","Pozzi","Proietti","Ricci","Ricciardi","Rinaldi","Riva","Rizzi",
 		"Rizzo","Romano","Romeo","Rossetti","Rossi","Ruggeri","Ruggiero","Russo","Sala","Sanna",
-		"Santini","Santoro","Sartori","Serra","Silvestri","Sorrentino","Testa","Valente","Valentini",
+		"Santini","Santoro","Sartori","Serra","Silvestri","Sorrentino","Strambini","Testa","Valente","Valentini",
 		"Villa","Villani","Vitale","Vitali","Volpe","Zanetti"};
 
 
@@ -79,7 +79,7 @@ public class Tools {
 	};
 	
 	static String getMail(String nome, String cognome){
-		String [] domini = {"mail.it","mail.com","gmail.com","libero.it","tiscali.it"};
+		String [] domini = {"mail.it","mail.com","gmail.com","libero.it","tiscali.it","hotmail.it","alice.it","outlook.com","jegjeghede.org"};
 		double randNumber1 = Math.random();
 		int id = (int) (randNumber1 * domini.length);
 		
