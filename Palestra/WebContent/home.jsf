@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+<h:head>
+
+	<title>Presentazione Palestra</title>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+</h:head>
+
+
+<h:body>
+
+	<div class="container">
+		<div class="row"  style="padding-top:10px">
+		<img src="img/banner.jpg" />
+		
+		</div >
+		
+		<div class="row"  style="padding-top:10px">
+		<div class="col-md-10">
+		<h3>Benvenuti nella palestra Gruppi Fitness TIMETABLE</h3>
+		<h5>La nostra palestra offre svariati tipi di corsi per tutte le esigenze.<br />Il nostro scopo è dare il benessere ai nostri clienti.<br />
+		Di seguito le tipologie di corsi offerti da noi..</h5>
+		</div>
+		</div>
+		<div class="row" style="padding-top:10px">
+			<div class="col-md-10">
+			<h:form>
+				<h:dataTable value="#{tc.tipoCorsi}" var="t">
+
+					<h:column>
+						<f:facet name="header">Nome</f:facet>
+       					<h:commandLink value="#{t.nome}" action="#{tc.recuperaCorsi(t.nome)}" />
+     				</h:column>
+					
+					<h:column>
+						<f:facet name="header">Descrizione</f:facet>
+						 #{t.descrizione}
+							
+					</h:column>
+				</h:dataTable>
+			</h:form>
+			</div>
+		</div>
+
+	</div>
+</h:body>
+</html>

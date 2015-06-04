@@ -44,36 +44,7 @@ public class Simulatore {
 			String mailM = Tools.getMail(nomeM, cognomeM);
 			String loginM = Tools.getLogin(nomeM, cognomeM);
 			String pwd = Tools.getPassword();
-			//		String nomeFCompleto = nomeF+" "+cognomeF+" "+mailF+" "+loginF;
-			//		String nomeMCompleto = nomeM+" "+cognomeM+" "+mailM+" "+loginM;
 
-			//		if(listaNomi.contains(nomeFCompleto)){
-			//			nomeF = 	Tools.getNomeFemminile();
-			//			cognomeF = Tools.getCognome();
-			//			mailF = Tools.getMail(nomeF, cognomeF);
-			//			loginF = Tools.getLogin(nomeF, cognomeF);
-			//		}else listaNomi.add(nomeFCompleto);
-			//		
-			//		if(listaNomi.contains(nomeMCompleto)){
-			//			nomeM = Tools.getNomeMaschile();
-			//			cognomeM = Tools.getCognome();
-			//			mailM = Tools.getMail(nomeM, cognomeM);
-			//			loginM = Tools.getLogin(nomeM, cognomeM);
-			//		}else listaNomi.add(nomeMCompleto);
-
-//			if(listaNomi.contains(mailF)){
-//				nomeF = 	Tools.getNomeFemminile();
-//				cognomeF = Tools.getCognome();
-//				mailF = Tools.getMail(nomeF, cognomeF);
-//				loginF = Tools.getLogin(nomeF, cognomeF);
-//			}else listaNomi.add(mailF);
-//
-//			if(listaNomi.contains(mailM)){
-//				nomeM = Tools.getNomeMaschile();
-//				cognomeM = Tools.getCognome();
-//				mailM = Tools.getMail(nomeM, cognomeM);
-//				loginM = Tools.getLogin(nomeM, cognomeM);
-//			}else listaNomi.add(mailM);
 
 			
 			
@@ -108,19 +79,7 @@ public class Simulatore {
 
 
 		for(int i =0;i<listaUtenti.size();i++){
-			//			
-			//			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-			//			String dateInString = listaUtenti.get(i).getDn();
-			//			java.util.Date date = null;
-			//			try {
-			//		 
-			//				date =  formatter.parse(dateInString);
-			//				System.out.println("Data: "+date);
-			//				System.out.println(formatter.format(date));
-			//		 
-			//			} catch (ParseException e) {
-			//				e.printStackTrace();
-			//			}
+
 			int anno = Tools.getAge(listaUtenti.get(i).getDn());
 
 
@@ -165,7 +124,7 @@ public class Simulatore {
 			stm = con.createStatement();
 
 			PreparedStatement pstm = con.prepareStatement(MyQuery.qInsertStudente);
-			PreparedStatement pstmDocenti = con.prepareStatement(MyQuery.qInsertDocente);
+//			PreparedStatement pstmDocenti = con.prepareStatement(MyQuery.qInsertDocente);
 			System.out.println("Cancello le iscrizioni...");
 			System.out.println("Cancellazione tabella iscrizioni: " + !stm.execute(" truncate table iscrizione "));
 			System.out.println("Cancellazione tabella studenti: " + !stm.execute("delete from studente"));
@@ -205,7 +164,7 @@ public class Simulatore {
 				
 
 			}*/
-			pstmDocenti.close();
+//			pstmDocenti.close();
 			pstm.close();
 			
 		

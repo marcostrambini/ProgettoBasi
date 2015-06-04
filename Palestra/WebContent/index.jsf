@@ -4,32 +4,45 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html">
-	
-	
-	
+
+
 <h:head>
+
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
 	<title>Welcome</title>
+
+
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+
 </h:head>
 <h:body>
-	<h:form>
-		<h3>Please enter your name and password.</h3>
-		<table>
-			<tr>
-				<td>Name:</td>
-				<td><h:inputText value="#{user.name}" /></td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-				<td><h:inputSecret value="#{user.password}" /></td>
-			</tr>
-		</table>
-		<p>
-			<h:commandButton value="Login" action="welcome" />
-		</p>
-	
-	</h:form>
+	<div class="container" style="display: block;width: 600px;  margin-left: auto;  margin-right: auto; padding-top:100px;">
+		<div class="row">
+			<div class="col-md-8" >
+			<h:form>
+				<h3>Please enter your name and password.</h3>
+				<table>
+					<tr>
+						<td>Name:</td>
+						<td><h:inputText value="#{user.name}"  /></td>
+					</tr>
+					<tr>
+						<td>Password:</td>
+						<td><h:inputSecret value="#{user.password}"  /></td>
+					</tr>
+				</table>
+				<p>
+					<h:commandButton value="Login" action="welcome" />
+				</p>
 
-
-
+			</h:form>
+			</div>
+		</div>
+	</div>
 </h:body>
 </html>

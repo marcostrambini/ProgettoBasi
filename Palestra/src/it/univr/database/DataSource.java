@@ -1,5 +1,7 @@
 package it.univr.database;
 
+import it.univr.MyQuery;
+
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -74,41 +76,26 @@ public class DataSource implements Serializable {
     Class.forName( driver );
   }
 
-  /**
-   * Il metodo costruisce un bean a partire dal record attuale del ResultSet
-   * passato come parametro.
-   *
-   * @param rs
-   * @return
-   * @throws SQLException
-   */
-//  private CorsoStudi makeCorsoStudiBean( ResultSet rs ) throws SQLException {
-//    CorsoStudi bean = new CorsoStudi();
-//    bean.setId( rs.getInt( "id" ) );
-//    bean.setNomeCorsoStudi( rs.getString( "Nome" ) );
-//    bean.setCodice( rs.getString( "Codice" ) );
-//    bean.setAbbreviazione( rs.getString( "Abbreviazione" ) );
-//    bean.setDurataAnni( rs.getInt( "Durataanni" ) );
-//    bean.setSede( rs.getString( "Sede" ) );
-//    bean.setInformativa( rs.getString( "Informativa" ) );
-//    return bean;
-//  }
 
-  /**
-   * Il metodo costruisce un bean a partire dal record attuale del ResultSet
-   * passato come parametro.
-   *
-   * @param rs
-   * @return
-   * @throws SQLException
-   */
-//  private CorsoStudi makeCSBean( ResultSet rs ) throws SQLException {
-//    CorsoStudi bean = new CorsoStudi();
-//    bean.setId( rs.getInt( "id" ) );
-//    bean.setNomeCorsoStudi( rs.getString( "Nome" ) );
-//    bean.setCodice( rs.getString( "Codice" ) );
-//    return bean;
-//  }
+  private Corso makeCorsoBean( ResultSet rs ) throws SQLException {
+    Corso bean = new Corso();
+    bean.setId( rs.getInt( "id"));
+    bean.setNome( rs.getString( "nome" ));
+    bean.setData_i( rs.getDate("data_i"));
+    bean.setData_f( rs.getDate("data_f"));
+    bean.setTipo(rs.getString("tipo"));
+    bean.setDescrizione(rs.getString("descrizione"));
+    return bean;
+  }
+
+
+  	private TipoCorso makeTipoCorsoBean( ResultSet rs ) throws SQLException {
+  		TipoCorso bean = new TipoCorso();
+  		bean.setNome( rs.getString( "nome" ) );
+  		bean.setDescrizione( rs.getString( "descrizione" ) );
+
+  		return bean;
+  }
 //  
 //
 //  private PresideFacolta makePFBean( ResultSet rs ) throws SQLException {
@@ -124,85 +111,76 @@ public class DataSource implements Serializable {
 
   // ===========================================================================
 
-  /**
-   * Metodo per il recupero delle informazioni del corso di studi con l'id
-   * specificato.
-   *
-   * @param id
-   * @return
-   */
-//  public CorsoStudi getCorsoStudi( int id ) {
-//    // Dichiarazione delle variabili necessarie
-//    Connection con = null;
-//    PreparedStatement pstmt = null;
-//    ResultSet rs = null;
-//    CorsoStudi result = null;
-//    try {
-//      // tentativo di connessione al database
-//      con = DriverManager.getConnection( url, user, passwd );
-//      // connessione riuscita, ottengo l'oggetto per l'esecuzione dell'interrogazione.
-//      pstmt = con.prepareStatement( cs );
-//      pstmt.clearParameters();
-//      // imposto i parametri della query
-//      pstmt.setInt( 1, id );
-//      // eseguo la query
-//      rs = pstmt.executeQuery();
-//      // memorizzo il risultato dell'interrogazione in Vector di Bean
-//      if( rs.next() ) {
-//        result = makeCorsoStudiBean( rs );
-//      }
-//
-//    } catch( SQLException sqle ) { // Catturo le eventuali eccezioni
-//      sqle.printStackTrace();
-//
-//    } finally { // alla fine chiudo la connessione.
-//      try {
-//        con.close();
-//      } catch( SQLException sqle1 ) {
-//        sqle1.printStackTrace();
-//      }
-//    }
-//    return result;
-//  }
+
+  public  List<Corso> getCorsi( String tipoCorso ) {
+    // Dichiarazione delle variabili necessarie
+    Connection con = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    List<Corso> result = new ArrayList<Corso>();
+    try {
+      // tentativo di connessione al database
+      con = getConnection();
+      // connessione riuscita, ottengo l'oggetto per l'esecuzione dell'interrogazione.
+      pstmt = con.prepareStatement( MyQuery.getqSelectCorso() );
+      pstmt.clearParameters();
+      // imposto i parametri della query
+      pstmt.setString( 1, tipoCorso );
+      // eseguo la query
+      rs = pstmt.executeQuery();
+      // memorizzo il risultato dell'interrogazione in Vector di Bean
+   
+      
+      while( rs.next() ) {
+          result.add(  makeCorsoBean( rs ) );
+        }
+
+    } catch( SQLException sqle ) { // Catturo le eventuali eccezioni
+      sqle.printStackTrace();
+
+    } finally { // alla fine chiudo la connessione.
+      try {
+        con.close();
+      } catch( SQLException sqle1 ) {
+        sqle1.printStackTrace();
+      }
+    }
+    return result;
+  }
 
 
-  /**
-   * Metodo per il recupero delle principali informazioni di tutti i corsi di
-   * studi
-   *
-   * @return
-   */
-//  public List<CorsoStudi> getCorsiStudi() {
-//    // dichiarazione delle variabili
-//    Connection con = null;
-//    Statement stmt = null;
-//    ResultSet rs = null;
-//    List<CorsoStudi> result = new ArrayList<CorsoStudi>();
-//
-//    try {
-//      // tentativo di connessione al database
-//      con = DriverManager.getConnection( url, user, passwd );
-//      // connessione riuscita, ottengo l'oggetto per l'esecuzione dell'interrogazione.
-//      stmt = con.createStatement();
-//      // eseguo l'interrogazione desiderata
-//      rs = stmt.executeQuery( css );
-//      // memorizzo il risultato dell'interrogazione nel Vector
-//      while( rs.next() ) {
-//        result.add( makeCSBean( rs ) );
-//      }
-//
-//    } catch( SQLException sqle ) { // catturo le eventuali eccezioni!
-//      sqle.printStackTrace();
-//
-//    } finally { // alla fine chiudo la connessione.
-//      try {
-//        con.close();
-//      } catch( SQLException sqle1 ) {
-//        sqle1.printStackTrace();
-//      }
-//    }
-//    return result;
-//  }
+
+  public List<TipoCorso> getTipiCorso() {
+    // dichiarazione delle variabili
+    Connection con = null;
+    Statement stmt = null;
+    ResultSet rs = null;
+    List<TipoCorso> result = new ArrayList<TipoCorso>();
+
+    try {
+      // tentativo di connessione al database
+      con = getConnection();
+      // connessione riuscita, ottengo l'oggetto per l'esecuzione dell'interrogazione.
+      stmt = con.createStatement();
+      // eseguo l'interrogazione desiderata
+      rs = stmt.executeQuery( MyQuery.getqSelectTipiCorso() );
+      // memorizzo il risultato dell'interrogazione nel Vector
+      while( rs.next() ) {
+        result.add( makeTipoCorsoBean( rs ) );
+      }
+
+    } catch( SQLException sqle ) { // catturo le eventuali eccezioni!
+      sqle.printStackTrace();
+
+    } finally { // alla fine chiudo la connessione.
+      try {
+        con.close();
+      } catch( SQLException sqle1 ) {
+        sqle1.printStackTrace();
+      }
+    }
+    return result;
+  }
 
   /**
    * Metodo per il recupero della/e facolta' di appartenenza del corso di studi
