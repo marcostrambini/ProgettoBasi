@@ -3,33 +3,74 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html">
-	
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
 	
 	
 <h:head>
-	<title>Welcome</title>
-</h:head>
-<h:body>
-	<h:form>
-		<h3>Please enter your name and password.</h3>
-		<table>
-			<tr>
-				<td>Name:</td>
-				<td><h:inputText value="#{user.name}" /></td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-				<td><h:inputSecret value="#{user.password}" /></td>
-			</tr>
-		</table>
-		<p>
-			<h:commandButton value="Login" action="welcome" />
-		</p>
+	<title>Informazioni sul Corso</title>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
 	
-	</h:form>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+</h:head>
+
+
+<h:body>
+
+	<div class="container">
+
+		<div class="row" style="padding-top: 50px">
+			
+		</div>
+		<div class="row" style="padding-top: 10px">
+			<div >
+				<h:form>
+					<h:dataTable value="#{cb.listaIscritti}" var="i" cellspacing="10" >
+
+						<h:column>
+							<f:facet name="header">nome</f:facet>
+							#{i.nome}
+						</h:column>
+
+
+						<h:column >
+							<f:facet name="header"  >cognome</f:facet>
+							#{i.cognome}
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">data di iscrizione</f:facet>
+							#{i.data_i}
+						</h:column>
+
+						
 
 
 
+					</h:dataTable>
+				</h:form>
+
+			</div>
+		</div>
+
+
+		<div class="row" style="padding-top: 50px">
+
+
+			<div class="col-md-2">
+
+				<h:outputLink value="home.jsf">
+					<h2>
+						<span class="glyphicon glyphicon-home"></span>
+					</h2>Home</h:outputLink>
+
+			</div>
+		</div>
+	</div>
 </h:body>
 </html>
+
+

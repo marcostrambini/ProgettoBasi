@@ -3,6 +3,7 @@ package it.univr;
 
 import it.univr.database.Corso;
 import it.univr.database.DataSource;
+import it.univr.database.Iscritti;
 import it.univr.database.TipoCorso;
 
 import javax.annotation.PostConstruct;
@@ -13,16 +14,25 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-@ManagedBean(name = "tc")
+@ManagedBean(name = "cb")
 @SessionScoped
-public class TipoCorsoView implements Serializable {
+public class CorsoBean implements Serializable {
 
   // === Properties ============================================================
 
   private DataSource ds;
   private List<TipoCorso> listaCorsi;
   private List<Corso> corsiSelezionati;
-  private Corso corsoSelezionato;
+  private List<Iscritti> listaIscritti;
+  public List<Iscritti> getListaIscritti() {
+	return listaIscritti;
+}
+
+
+private String obiettiviFormativi;
+
+
+private Corso corsoSelezionato;
   private String nome;
   private String tipoCorso;
 
@@ -30,7 +40,7 @@ public class TipoCorsoView implements Serializable {
 
 
 
-public TipoCorsoView() {
+public CorsoBean() {
     this.listaCorsi = null;
     this.corsoSelezionato = null;
   }
@@ -43,6 +53,8 @@ public TipoCorsoView() {
       this.ds = null;
     }
   }
+  
+
 
   public List<TipoCorso> getTipoCorsi() {
     if( this.ds != null ){
@@ -51,10 +63,18 @@ public TipoCorsoView() {
     return listaCorsi;
   }
 
+  public String recuperaIscritti(int idCorso){
+	  if( this.ds != null ){
+		  listaIscritti = ds.getIscrittiCorso(idCorso);
+	    }
+	  return "corso";
+  }
+  
   public String recuperaCorsi( String tipoCorso ){
     if( this.ds != null ){
       this.tipoCorso = tipoCorso;
       corsiSelezionati = ds.getCorsi( tipoCorso );
+      obiettiviFormativi = corsiSelezionati.get(0).getDescrizione();
       
     }
     return "tipo_corso";
@@ -72,6 +92,10 @@ public List<Corso> getCorsiSelezionati() {
 	return corsiSelezionati;
 }
 
+
+public String getObiettiviFormativi() {
+	return obiettiviFormativi;
+}
 //  public String getFacolta() {
 //    return facolta;
 //  }

@@ -1,6 +1,7 @@
 package it.univr.database;
 
 import it.univr.MyQuery;
+import it.univr.UserBean;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -80,9 +81,11 @@ public class DataSource implements Serializable {
   private Corso makeCorsoBean( ResultSet rs ) throws SQLException {
     Corso bean = new Corso();
     bean.setId( rs.getInt( "id"));
-    bean.setNome( rs.getString( "nome" ));
+    bean.setNome_corso( rs.getString( "nome_corso" ));
     bean.setData_i( rs.getDate("data_i"));
     bean.setData_f( rs.getDate("data_f"));
+    bean.setNome_docente(rs.getString("nome_docente"));
+    bean.setCognome_docente(rs.getString("cognome_docente"));
     bean.setTipo(rs.getString("tipo"));
     bean.setDescrizione(rs.getString("descrizione"));
     return bean;
@@ -96,6 +99,26 @@ public class DataSource implements Serializable {
 
   		return bean;
   }
+  	
+  private UserBean makeUserBean(ResultSet rs) throws SQLException {
+	  UserBean bean = new UserBean();
+	  bean.setNome(rs.getString("nome"));
+	  bean.setCognome(rs.getString("cognome"));
+	  bean.setDn(rs.getDate("dn"));
+	  bean.setEmail(rs.getString("email"));
+	  
+	  return bean;
+	  
+	  
+  }
+  
+  private Iscritti makeIscrittiCorsoBean(ResultSet rs) throws SQLException {
+	  Iscritti bean = new Iscritti();
+	  bean.setNome(rs.getString("nome"));
+	  bean.setCognome(rs.getString("cognome"));
+	  bean.setData_i(rs.getDate("data_i"));
+	  return bean;
+}
 //  
 //
 //  private PresideFacolta makePFBean( ResultSet rs ) throws SQLException {
@@ -149,8 +172,39 @@ public class DataSource implements Serializable {
   }
 
 
+  public List<Iscritti> getIscrittiCorso(int idCorso) {
+	  Connection con = null;
+	    PreparedStatement pstm = null;
+	    ResultSet rs = null;
+	    List<Iscritti> result = new ArrayList<Iscritti>();
+	    try {
+	        con = getConnection();
+	        pstm = con.prepareStatement(MyQuery.getqSelectStudentiPerCorso());
+	        pstm.setInt(1, idCorso);
+	        rs = pstm.executeQuery( );
+	    
+	        while( rs.next() ) {
+	          result.add( makeIscrittiCorsoBean( rs ) );
+	        }
 
-  public List<TipoCorso> getTipiCorso() {
+	      } catch( SQLException sqle ) { 
+	        sqle.printStackTrace();
+
+	      } finally { 
+	        try {
+	          con.close();
+	        } catch( SQLException sqle1 ) {
+	          sqle1.printStackTrace();
+	        }
+	      }
+	      return result;
+	    }
+   
+
+
+
+
+public List<TipoCorso> getTipiCorso() {
     // dichiarazione delle variabili
     Connection con = null;
     Statement stmt = null;
@@ -158,21 +212,18 @@ public class DataSource implements Serializable {
     List<TipoCorso> result = new ArrayList<TipoCorso>();
 
     try {
-      // tentativo di connessione al database
       con = getConnection();
-      // connessione riuscita, ottengo l'oggetto per l'esecuzione dell'interrogazione.
       stmt = con.createStatement();
-      // eseguo l'interrogazione desiderata
       rs = stmt.executeQuery( MyQuery.getqSelectTipiCorso() );
-      // memorizzo il risultato dell'interrogazione nel Vector
+  
       while( rs.next() ) {
         result.add( makeTipoCorsoBean( rs ) );
       }
 
-    } catch( SQLException sqle ) { // catturo le eventuali eccezioni!
+    } catch( SQLException sqle ) { 
       sqle.printStackTrace();
 
-    } finally { // alla fine chiudo la connessione.
+    } finally { 
       try {
         con.close();
       } catch( SQLException sqle1 ) {
@@ -182,6 +233,36 @@ public class DataSource implements Serializable {
     return result;
   }
 
+  
+  public boolean checkLogin(String email, String password){
+	  Connection con = null;
+	  PreparedStatement pstm = null;
+	  ResultSet rs = null;
+	  try{
+		 con = getConnection();
+		 pstm = con.prepareStatement(MyQuery.getqSelectLogin());
+		 pstm.setString(1, email);
+		 pstm.setString(2, password);
+		 rs = pstm.executeQuery();
+		 if(rs.next())
+			 return true;
+		 else
+			 return false;
+		 
+		 
+	  }catch(SQLException e){
+	  	  e.printStackTrace();
+	  return false;
+	  }finally{
+		  try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  }
+  }
+  
   /**
    * Metodo per il recupero della/e facolta' di appartenenza del corso di studi
    * con l'id specificato.
@@ -302,5 +383,8 @@ public class DataSource implements Serializable {
 	}
 	  
   }
+
+
+
 
 }

@@ -1,32 +1,33 @@
 package it.univr.database;
 
 import java.sql.Date;
+import java.util.List;
 
-public class Corso {
+public class CorsoDettaglio {
 	
 	
 	 // === Properties ============================================================
 
 	  private int id;
 	  private String nome_corso;
-	  private String nome_docente;
-	  private String cognome_docente;
+	  private List<String> docente;
+	  private int numero_iscritti;
 	  private Date data_i;
 	  private Date data_f;
-	  private String tipo;
-	  private String descrizione;
+	 
 	
 
 	  // === Methods ===============================================================
 
-	  public Corso() {
+	  public CorsoDettaglio() {
 		  
 		  id = 0;
 		  nome_corso = null;
+		  docente = null;
+		  numero_iscritti = 0;
 		  data_i = null;
 		  data_f = null;
-		  tipo = null;
-		  descrizione = null;
+		  
 	
 	  }
 
@@ -39,9 +40,6 @@ public class Corso {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
-
 
 
 	public Date getData_i() {
@@ -62,27 +60,7 @@ public class Corso {
 	public void setData_f(Date data_f) {
 		this.data_f = data_f;
 	}
-
-
-	public String getTipo() {
-		return tipo;
-	}
-
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
-
-	public String getDescrizione() {
-		return descrizione;
-	}
-
-
-	public void setDescrizione(String descrizione) {
-		this.descrizione = descrizione;
-	}
-
+	
 
 	public String getNome_corso() {
 		return nome_corso;
@@ -94,23 +72,25 @@ public class Corso {
 	}
 
 
-	public String getNome_docente() {
-		return nome_docente;
+	public List<String> getDocente() {
+		return docente;
 	}
 
 
-	public void setNome_docente(String nome_docente) {
-		this.nome_docente = nome_docente;
+	public void setDocente(List<String> docente) {
+		this.docente = docente;
 	}
 
 
-	public String getCognome_docente() {
-		return cognome_docente;
+	public int getNumero_iscritti() {
+		return numero_iscritti;
 	}
 
 
-	public void setCognome_docente(String cognome_docente) {
-		this.cognome_docente = cognome_docente;
+	public void setNumero_iscritti(int numero_iscritti) {
+		this.numero_iscritti = numero_iscritti;
 	}
+
+
 
 }

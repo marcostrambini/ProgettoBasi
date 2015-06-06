@@ -29,30 +29,47 @@
 		</div >
 		
 		<div class="row"  style="padding-top:10px">
-		<div class="col-md-10">
+		<div class="col-md-9">
 		<h3>Benvenuti nella palestra Gruppi Fitness TIMETABLE</h3>
 		<h5>La nostra palestra offre svariati tipi di corsi per tutte le esigenze.<br />Il nostro scopo è dare il benessere ai nostri clienti.<br />
-		Di seguito le tipologie di corsi offerti da noi..</h5>
+		Di seguito le tipologie di corsi offerti:</h5>
+		</div>
+		<div class="col-md-2">
+		
+		<h:outputLink value="login.jsf"><h2> <span class="glyphicon glyphicon-user" ></span></h2>Login</h:outputLink>
 		</div>
 		</div>
 		<div class="row" style="padding-top:10px">
 			<div class="col-md-10">
 			<h:form>
-				<h:dataTable value="#{tc.tipoCorsi}" var="t">
+				<h:dataTable value="#{cb.tipoCorsi}" var="c" >
 
 					<h:column>
 						<f:facet name="header">Nome</f:facet>
-       					<h:commandLink value="#{t.nome}" action="#{tc.recuperaCorsi(t.nome)}" />
+       					<h:commandLink value="#{c.nome}" action="#{cb.recuperaCorsi(c.nome)}" />
      				</h:column>
 					
 					<h:column>
 						<f:facet name="header">Descrizione</f:facet>
-						 #{t.descrizione}
+						 #{c.descrizione}
 							
 					</h:column>
 				</h:dataTable>
 			</h:form>
 			</div>
+		</div>
+		<div class="row"  style="padding-top:40px">
+		<h6>Sede: Presso Ca Vignal 1 - Laboratorio Delta <br/><br/> Contatti: <br/>Marco Strambini - indirizzo email: 
+		<h:outputLink value="mailto:marco.strambini@studenti.univr.it">
+    		<f:param name="subject" value="Richesta Informaizoni" />
+    		<h:outputText value="marco.strambini@studenti.univr.it" />
+		</h:outputLink> 
+		 <br/>Andrea Olivieri - indirizzo email: 
+		<h:outputLink value="mailto:andrea.olivieri@studenti.univr.it">
+    		<f:param name="subject" value="Richesta Informaizoni" />
+    		<h:outputText value="andrea.olivieri@studenti.univr.it" />
+		</h:outputLink> 
+		</h6>
 		</div>
 
 	</div>

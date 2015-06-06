@@ -8,7 +8,7 @@
 <h:head>
 	<title>Informazioni sul Corso</title>
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
-
+	
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
@@ -20,36 +20,59 @@
 
 	<div class="container">
 
-
-		<h3>Corso di #{tc.tipoCorso}</h3>
-
+		<div class="row" style="padding-top: 50px">
+			<h3>Corsi offerti per la tipologia: #{cb.tipoCorso}</h3>
+			<h4>Obiettivi formativi:</h4>
+			<h5>#{cb.obiettiviFormativi }</h5>
+		</div>
 		<div class="row" style="padding-top: 10px">
-			<div class="col-md-10">
+			<div >
 				<h:form>
-					<h:dataTable value="#{tc.corsiSelezionati}" var="t">
+					<h:dataTable value="#{cb.corsiSelezionati}" var="c" cellspacing="10" >
 
 						<h:column>
-							<f:facet name="header">Nome</f:facet>
-							<h:commandLink value="#{t.nome}" />
+							<f:facet name="header">Codice:</f:facet>
+						
+							<h:commandLink value="#{c.id}" action="#{cb.recuperaIscritti(c.id)}" />
+						</h:column>
+
+
+						<h:column >
+							<f:facet name="header"  >Nome</f:facet>
+							#{c.nome_corso}
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Descrizione</f:facet>
-						 #{t.descrizione}
-							
-					</h:column>
+							<f:facet name="header">Docente Responsabile</f:facet>
+							#{c.nome_docente} #{c.cognome_docente}
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Periodo di svolgimento</f:facet>
+							dal #{c.data_i} al #{c.data_f}
+						</h:column>
+
+
+
 					</h:dataTable>
 				</h:form>
 
 			</div>
 		</div>
-	
 
-	<div class="row" style="padding-top: 50px">
-		<div class="col-md-10">
-			<h:outputLink value="home.jsf">Torna alla home</h:outputLink>
+
+		<div class="row" style="padding-top: 50px">
+
+
+			<div class="col-md-2">
+
+				<h:outputLink value="home.jsf">
+					<h2>
+						<span class="glyphicon glyphicon-home"></span>
+					</h2>Home</h:outputLink>
+
+			</div>
 		</div>
-	</div>
 	</div>
 </h:body>
 </html>
