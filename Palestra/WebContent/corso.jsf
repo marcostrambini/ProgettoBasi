@@ -23,6 +23,24 @@
 	<div class="container">
 
 		<div class="row" style="padding-top: 50px">
+		Corso: #{cb.nomeCorso } <br/>
+		Obiettivi Formativi: #{cb.obiettiviFormativi } <br/>
+		Numero di iscritti: #{cb.numeroIscritti }
+		
+			<h:form>
+					<h:dataTable value="#{cb.listaDocenti}" var="d" cellspacing="10" >
+
+						<h:column>
+							<f:facet name="header">Docenti</f:facet>
+							#{d.nome} #{d.cognome }
+						</h:column>
+
+
+						
+
+						
+					</h:dataTable>
+				</h:form>
 			
 		</div>
 		<div class="row" style="padding-top: 10px">
@@ -47,9 +65,6 @@
 						</h:column>
 
 						
-
-
-
 					</h:dataTable>
 				</h:form>
 
@@ -62,10 +77,16 @@
 
 			<div class="col-md-2">
 
-				<h:outputLink value="home.jsf">
+				<h:outputLink value="index.jsf">
 					<h2>
 						<span class="glyphicon glyphicon-home"></span>
 					</h2>Home</h:outputLink>
+					</div>
+			<div class="col-md-2">		
+					<h:outputLink value="tipo_corso.jsf">
+					<h2>
+						<span class="glyphicon glyphicon-th-list"></span>
+					</h2>Tipo Corsi</h:outputLink>
 
 			</div>
 		</div>

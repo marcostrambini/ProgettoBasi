@@ -1,34 +1,36 @@
 package it.univr.database;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Corso {
-	
-	
-	 // === Properties ============================================================
 
-	  private int id;
-	  private String nome_corso;
-	  private String nome_docente;
-	  private String cognome_docente;
-	  private Date data_i;
-	  private Date data_f;
-	  private String tipo;
-	  private String descrizione;
-	
 
-	  // === Methods ===============================================================
+	// === Properties ============================================================
 
-	  public Corso() {
-		  
-		  id = 0;
-		  nome_corso = null;
-		  data_i = null;
-		  data_f = null;
-		  tipo = null;
-		  descrizione = null;
-	
-	  }
+	private int id;
+	private String nome_corso;
+	private String nome_docente;
+	private String cognome_docente;
+	private int numero_iscritti;
+	private Date data_i;
+	private Date data_f;
+	private String tipo;
+	private String descrizione;
+
+
+	// === Methods ===============================================================
+
+	public Corso() {
+
+		id = 0;
+		nome_corso = null;
+		data_i = null;
+		data_f = null;
+		tipo = null;
+		descrizione = null;
+
+	}
 
 
 	public int getId() {
@@ -111,6 +113,20 @@ public class Corso {
 
 	public void setCognome_docente(String cognome_docente) {
 		this.cognome_docente = cognome_docente;
+
+
 	}
+
+
+
+	public int getNumero_iscritti() {
+		return numero_iscritti;
+	}
+
+
+	public void setNumero_iscritti(int numero_iscritti) {
+		this.numero_iscritti = numero_iscritti;
+	}
+
 
 }

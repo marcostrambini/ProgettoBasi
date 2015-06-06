@@ -91,11 +91,36 @@ public class DataSource implements Serializable {
     return bean;
   }
 
+  private Corso makeCorsoDettaglioBean( ResultSet rs ) throws SQLException {
+	    Corso bean = new Corso();
+	    bean.setId( rs.getInt( "id"));
+	    bean.setNome_corso( rs.getString( "nome_corso" ));
+	    bean.setData_i( rs.getDate("data_i"));
+	    bean.setData_f( rs.getDate("data_f"));
+	    bean.setNome_docente(rs.getString("nome_docente"));
+	    bean.setCognome_docente(rs.getString("cognome_docente"));
+	    bean.setTipo(rs.getString("tipo"));
+	    bean.setDescrizione(rs.getString("descrizione"));
+	    bean.setNumero_iscritti(rs.getInt("numero_iscritti"));
+	    return bean;
+	  }
+  
+  
+  
 
   	private TipoCorso makeTipoCorsoBean( ResultSet rs ) throws SQLException {
   		TipoCorso bean = new TipoCorso();
   		bean.setNome( rs.getString( "nome" ) );
   		bean.setDescrizione( rs.getString( "descrizione" ) );
+
+  		return bean;
+  }
+  	
+  	private Docente makeDocenteBean( ResultSet rs ) throws SQLException {
+  		Docente bean = new Docente();
+  		bean.setCodice(rs.getInt("codice"));
+  		bean.setNome( rs.getString( "nome" ) );
+  		bean.setCognome(rs.getString( "cognome" ));
 
   		return bean;
   }
@@ -200,9 +225,67 @@ public class DataSource implements Serializable {
 	      return result;
 	    }
    
+  public List<Corso> getDettagliCorsi(int idCorso) {
+	  Connection con = null;
+	  PreparedStatement pstm = null;
+	    ResultSet rs = null;
+	    List<Corso> result = new ArrayList<Corso>();
+	    try {
+	        con = getConnection();
+	        pstm = con.prepareStatement(MyQuery.getqSelectDettaglioCorso() );
+	        pstm.setInt(1, idCorso);
+	        rs = pstm.executeQuery( );
+		    
+	    
+	        while( rs.next() ) {
+	          result.add( makeCorsoDettaglioBean( rs ) );
+	        }
 
+	      } catch( SQLException sqle ) { 
+	        sqle.printStackTrace();
 
+	      } finally { 
+	        try {
+	          con.close();
+	        } catch( SQLException sqle1 ) {
+	          sqle1.printStackTrace();
+	        }
+	      }
+	      return result;
+	    }
+	
 
+  public List<Docente> getListaDocenti(int idCorso) {
+	  Connection con = null;
+	  PreparedStatement pstm = null;
+	    ResultSet rs = null;
+	    List<Docente> result = new ArrayList<Docente>();
+	    try {
+	        con = getConnection();
+	        pstm = con.prepareStatement(MyQuery.getqSelectDocentiCorso());
+	        pstm.setInt(1, idCorso);
+	        rs = pstm.executeQuery( );
+		    
+	    
+	        while( rs.next() ) {
+	          result.add( makeDocenteBean( rs ) );
+	        }
+
+	      } catch( SQLException sqle ) { 
+	        sqle.printStackTrace();
+
+	      } finally { 
+	        try {
+	          con.close();
+	        } catch( SQLException sqle1 ) {
+	          sqle1.printStackTrace();
+	        }
+	      }
+	      return result;
+	    }
+	
+ 
+  
 
 public List<TipoCorso> getTipiCorso() {
     // dichiarazione delle variabili
@@ -385,6 +468,106 @@ public List<TipoCorso> getTipiCorso() {
   }
 
 
+public int getNumeroIscrittiCorso(int idCorso) {
+	Connection con = null;
+    PreparedStatement pstm = null;
+    ResultSet rs = null;
+   int result = 0;
+    try {
+    	con = getConnection();
+        pstm = con.prepareStatement(MyQuery.getCountIscrittiCorso());
+        pstm.setInt(1, idCorso);
+        rs = pstm.executeQuery();	
+    	
+    	
+  
+      if( rs.next() ) {
+    	  result = rs.getInt(1);
+       
+      }
+
+    } catch( SQLException sqle ) { 
+      sqle.printStackTrace();
+
+    } finally { 
+      try {
+        con.close();
+      } catch( SQLException sqle1 ) {
+        sqle1.printStackTrace();
+      }
+    }
+    return result;
+  }
+
+
+public String getNomeCorso(int idCorso) {
+	Connection con = null;
+    PreparedStatement pstm = null;
+    ResultSet rs = null;
+    String result = null;
+    try {
+    	  con = getConnection();
+          pstm = con.prepareStatement(MyQuery.getqSelectCorsoMin());
+          pstm.setInt(1, idCorso);
+          rs = pstm.executeQuery();
+    
+  
+      if( rs.next() ) {
+    	  result = rs.getString(1);
+       
+      }
+
+    } catch( SQLException sqle ) { 
+      sqle.printStackTrace();
+
+    } finally { 
+      try {
+        con.close();
+      } catch( SQLException sqle1 ) {
+        sqle1.printStackTrace();
+      }
+    }
+    return result;
+  }
+
+public String getObiettiviFormativiCorso(int idCorso) {
+	Connection con = null;
+    PreparedStatement pstm = null;
+    ResultSet rs = null;
+    String result = null;
+    try {
+      con = getConnection();
+      pstm = con.prepareStatement(MyQuery.getqSelectCorsoMin());
+      pstm.setInt(1, idCorso);
+      rs = pstm.executeQuery();
+      if( rs.next() ) {
+    	  result = rs.getString(2);
+       
+      }
+
+    } catch( SQLException sqle ) { 
+      sqle.printStackTrace();
+
+    } finally { 
+      try {
+        con.close();
+      } catch( SQLException sqle1 ) {
+        sqle1.printStackTrace();
+      }
+    }
+    return result;
+  }
+
 
 
 }
+
+
+
+
+
+
+
+
+
+

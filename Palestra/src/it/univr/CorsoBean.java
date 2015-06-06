@@ -3,6 +3,7 @@ package it.univr;
 
 import it.univr.database.Corso;
 import it.univr.database.DataSource;
+import it.univr.database.Docente;
 import it.univr.database.Iscritti;
 import it.univr.database.TipoCorso;
 
@@ -23,18 +24,32 @@ public class CorsoBean implements Serializable {
   private DataSource ds;
   private List<TipoCorso> listaCorsi;
   private List<Corso> corsiSelezionati;
-  private List<Iscritti> listaIscritti;
-  public List<Iscritti> getListaIscritti() {
-	return listaIscritti;
-}
+  private List<Corso> dettagliCorsi;
+  private List<Iscritti> listaIscritti; //
+  private int numeroIscritti; //
+  private String nomeCorso;
+  private String obiettiviFormativi;
+  private List<Docente> listaDocenti;
 
 
-private String obiettiviFormativi;
 
 
 private Corso corsoSelezionato;
   private String nome;
   private String tipoCorso;
+  
+  
+  public List<Iscritti> getListaIscritti() {
+	return listaIscritti;
+}
+
+  public int getNumeroIscritti() {
+	return numeroIscritti;
+}
+
+
+
+
 
   // === Methods ===============================================================
 
@@ -63,9 +78,21 @@ public CorsoBean() {
     return listaCorsi;
   }
 
-  public String recuperaIscritti(int idCorso){
+  public String recuperaDettagliCorso(int idCorso){
 	  if( this.ds != null ){
+		  
 		  listaIscritti = ds.getIscrittiCorso(idCorso);
+		  System.out.println("recupero la lista degli iscritti: "+listaIscritti.size());
+		  
+		  numeroIscritti = ds.getNumeroIscrittiCorso(idCorso);
+		  System.out.println("recupero il numero degli iscritti: "+numeroIscritti);
+		  nomeCorso = ds.getNomeCorso(idCorso);
+		  System.out.println("recupero il nome del corso: "+nomeCorso);
+		  obiettiviFormativi = ds.getObiettiviFormativiCorso(idCorso);
+		  System.out.println("recupero gli obiettivi formativi: "+obiettiviFormativi);
+		  listaDocenti = ds.getListaDocenti(idCorso);
+		  System.out.println("recupero la lista dei docenti: "+listaDocenti.size());
+		  
 	    }
 	  return "corso";
   }
@@ -96,7 +123,17 @@ public List<Corso> getCorsiSelezionati() {
 public String getObiettiviFormativi() {
 	return obiettiviFormativi;
 }
-//  public String getFacolta() {
-//    return facolta;
-//  }
+
+
+public List<Corso> getDettagliCorsi() {
+	return dettagliCorsi;
+}
+
+public String getNomeCorso() {
+	return nomeCorso;
+}
+
+public List<Docente> getListaDocenti() {
+	return listaDocenti;
+}
 }

@@ -33,7 +33,7 @@
 						<h:column>
 							<f:facet name="header">Codice:</f:facet>
 						
-							<h:commandLink value="#{c.id}" action="#{cb.recuperaIscritti(c.id)}" />
+							<h:commandLink value="#{c.id}" action="#{cb.recuperaDettagliCorso(c.id)}"/>
 						</h:column>
 
 
@@ -66,7 +66,7 @@
 
 			<div class="col-md-2">
 
-				<h:outputLink value="home.jsf">
+				<h:outputLink value="index.jsf">
 					<h2>
 						<span class="glyphicon glyphicon-home"></span>
 					</h2>Home</h:outputLink>
