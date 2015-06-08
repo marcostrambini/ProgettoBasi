@@ -5,8 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
-	
-	
+		
 <h:head>
 	<title>Informazioni sul Corso</title>
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
@@ -17,34 +16,70 @@
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 </h:head>
 
-
 <h:body>
 
 	<div class="container">
 
 		<div class="row" style="padding-top: 50px">
-		Corso: #{cb.nomeCorso } <br/>
-		Obiettivi Formativi: #{cb.obiettiviFormativi } <br/>
-		Numero di iscritti: #{cb.numeroIscritti }
+	    <h4>	Corso: #{cb.nomeCorso }</h4> 
+		<h5>Obiettivi Formativi: #{cb.obiettiviFormativi } <br/><br/>
+		Numero di iscritti: #{cb.numeroIscritti } <br/>
+		Periodo di svolgimento dal #{cb.dataInizialeCorso } al  #{cb.dataFinaleCorso } <br/>
+		</h5>
 		
-			<h:form>
+		<br/>
+		
+		
+		<h:form>
 					<h:dataTable value="#{cb.listaDocenti}" var="d" cellspacing="10" >
-
 						<h:column>
 							<f:facet name="header">Docenti</f:facet>
 							#{d.nome} #{d.cognome }
 						</h:column>
-
-
-						
-
-						
 					</h:dataTable>
 				</h:form>
+			<br/>	
+				
+		<h:form>
+			<h:dataTable value="#{cb.programmazioneCorso}" var="p" cellspacing="10" >
+				<h:column>
+					<f:facet name="header">Programmazione settimanale: </f:facet>
+					il #{p.g_sett } dalle #{p.ora_i } alle #{p.ora_f }
+				</h:column>
+			</h:dataTable>
+		</h:form>
+		<br/>	
+		<h4>Materiale a disposizione:</h4>
+		<h:form>
+			<h:dataTable value="#{cb.materialeCorso}" var="m" cellspacing="10" >
+				<h:column>
+					<f:facet name="header">Nome </f:facet>
+					
+					<h:outputLink  value="#{m.path }"><h:outputText value="#{m.nome }"></h:outputText></h:outputLink>
+					
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">Tipo </f:facet>
+					#{m.tipo }
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">Formato </f:facet>
+					#{m.formato }
+				</h:column>
+				
+				
+			</h:dataTable>
+		</h:form>		
+		
+		
 			
 		</div>
+		
 		<div class="row" style="padding-top: 10px">
 			<div >
+			<h4>Elenco degli iscritti:</h4>
 				<h:form>
 					<h:dataTable value="#{cb.listaIscritti}" var="i" cellspacing="10" >
 
@@ -52,7 +87,6 @@
 							<f:facet name="header">nome</f:facet>
 							#{i.nome}
 						</h:column>
-
 
 						<h:column >
 							<f:facet name="header"  >cognome</f:facet>
@@ -63,17 +97,12 @@
 							<f:facet name="header">data di iscrizione</f:facet>
 							#{i.data_i}
 						</h:column>
-
-						
 					</h:dataTable>
 				</h:form>
-
 			</div>
 		</div>
 
-
 		<div class="row" style="padding-top: 50px">
-
 
 			<div class="col-md-2">
 
@@ -87,7 +116,6 @@
 					<h2>
 						<span class="glyphicon glyphicon-th-list"></span>
 					</h2>Tipo Corsi</h:outputLink>
-
 			</div>
 		</div>
 	</div>

@@ -42,20 +42,20 @@
 
 <h:form>
 			<h:dataTable value="#{user.utente}" var="u" cellspacing="10" >
-				<h:column>
+				<b:column>
 					<f:facet name="header">Nome: </f:facet>
 						#{u.nome }
-				</h:column>
+				</b:column>
 				
-				<h:column>
+				<b:column>
 					<f:facet name="header">Cognome: </f:facet>
 					#{u.cognome }
-				</h:column>
+				</b:column>
 				
-				<h:column>
+				<b:column>
 					<f:facet name="header">Data di nascita: </f:facet>
 					#{u.dn }
-				</h:column>
+				</b:column>
 				
 			</h:dataTable>
 		</h:form>		

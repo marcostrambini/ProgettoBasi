@@ -36,7 +36,7 @@ static String qCountCorsiId = " select count(*) from iscrizione where id_corso =
 
 static String qSelectStudentiPerCorso = " select s.nome,s.cognome,i.data_i "
 										+ " from studente s join iscrizione i on s.email = i.studente_email "
-										+ " where i.id_corso = ?";
+										+ " where i.id_corso = ? order by s.cognome";
 
 static String qSelectDettaglioCorso = " select c.nome,c.descrizione,dc.nome as nome_docente,dc.cognome, count(i.id_corso) as numero_iscritti "
 									+ " from corsi c join docenza dz on c.id = dz.id_corso "
@@ -45,16 +45,31 @@ static String qSelectDettaglioCorso = " select c.nome,c.descrizione,dc.nome as n
 									+ " where c.id=? "
 									+ " group by i.id_corso,c.nome,c.descrizione,dc.nome,dc.cognome"; 
 
-static String qSelectMaterialiCorso = " select m.nome,m.tipo, m.formato,m.path "
-									+ " from supportodidattico s join materiale m on s.id_materiale = m.id join corsi c on c.id = s.id_corso "
-									+ " where c.id = ?";
-
-
 static String qSelectDocentiCorso = " select doc.codice, doc.nome, doc.cognome "
 							    	+ " from docente doc join docenza dz on doc.codice = dz.cod_docente join corsi c on dz.id_corso = c.id "
 							    	+ " where c.id =? ";
 
 static String qSelectCorsoMin = " select nome,descrizione from corsi where id=? ";
+
+static String qSelectPeriodoCorso = " select data_i,data_f from corsi where id = ? ";
+
+static String qSelectProgrammazioneCorso = " select f.g_sett, f.ora_i,f.ora_f from corsi c join programmazione p on c.id=p.id_corso join fasceorarie f on p.fo_id = f.id where c.id = ? ";
+
+static String qSelectMaterialeCorso = " select m.id,m.path,m.nome,m.tipo,m.formato "
+									+ " from corsi c join supportodidattico s on c.id=s.id_corso join materiale m on s.id_materiale = m.id "
+									+ " where c.id = ? order by m.id";
+
+static String qSelectCorsiPerStudente = " select c.nome from corsi c join iscrizione i on c.id=i.id_corso join studente s on i.studente_email = s.email where s.email = ? ";
+
+static String qSelectMaterialePerStudente = " select distinct(m.nome ), m.path,m.id,m.formato,m.tipo "
+										  + " from corsi c join iscrizione i on c.id=i.id_corso join studente s on i.studente_email = s.email join supportodidattico sup on sup.id_corso = c.id join materiale m on m.id=sup.id_materiale "
+										  + " where s.email = ?";
+
+
+public static String getqSelectPeriodoCorso() {
+	return qSelectPeriodoCorso;
+}
+
 
 public static String getqSelectStudentiPerCorso() {
 	return qSelectStudentiPerCorso;
@@ -81,11 +96,6 @@ public static String getqSelectTipiCorso() {
 }
 
 
-public static String getqSelectMaterialiCorso() {
-	return qSelectMaterialiCorso;
-}
-
-
 public static String getqSelectDettaglioCorso() {
 	return qSelectDettaglioCorso;
 }
@@ -102,6 +112,26 @@ public static String getCountIscrittiCorso() {
 
 public static String getqSelectCorsoMin() {
 	return qSelectCorsoMin;
+}
+
+
+public static String getqSelectProgrammazioneCorso() {
+	return qSelectProgrammazioneCorso;
+}
+
+
+public static String getqSelectMaterialeCorso() {
+	return qSelectMaterialeCorso;
+}
+
+
+public static String getqSelectCorsiPerStudente() {
+	return qSelectCorsiPerStudente;
+}
+
+
+public static String getqSelectMaterialePerStudente() {
+	return qSelectMaterialePerStudente;
 }
 
 	

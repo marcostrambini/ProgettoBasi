@@ -5,6 +5,8 @@ import it.univr.database.Corso;
 import it.univr.database.DataSource;
 import it.univr.database.Docente;
 import it.univr.database.Iscritti;
+import it.univr.database.Materiale;
+import it.univr.database.ProgrammazioneCorso;
 import it.univr.database.TipoCorso;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +14,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,11 +34,10 @@ public class CorsoBean implements Serializable {
   private String nomeCorso;
   private String obiettiviFormativi;
   private List<Docente> listaDocenti;
-
-
-
-
-private Corso corsoSelezionato;
+  private List<Date> periodoSvolgimento;
+  private ArrayList<ProgrammazioneCorso> programmazioneCorso;
+  private ArrayList<Materiale> materialeCorso;
+  private Corso corsoSelezionato;
   private String nome;
   private String tipoCorso;
   
@@ -58,6 +61,10 @@ private Corso corsoSelezionato;
 public CorsoBean() {
     this.listaCorsi = null;
     this.corsoSelezionato = null;
+    this.periodoSvolgimento = null;
+    this.programmazioneCorso = null;
+   
+    
   }
 
   @PostConstruct
@@ -70,6 +77,13 @@ public CorsoBean() {
   }
   
 
+  public Date getDataInizialeCorso(){
+	  return periodoSvolgimento.get(0);
+  }
+  
+  public Date getDataFinaleCorso(){
+	  return periodoSvolgimento.get(1);
+  }
 
   public List<TipoCorso> getTipoCorsi() {
     if( this.ds != null ){
@@ -92,6 +106,13 @@ public CorsoBean() {
 		  System.out.println("recupero gli obiettivi formativi: "+obiettiviFormativi);
 		  listaDocenti = ds.getListaDocenti(idCorso);
 		  System.out.println("recupero la lista dei docenti: "+listaDocenti.size());
+		  periodoSvolgimento = ds.getPeriodoSvolgimentoCorso(idCorso);
+		  System.out.println("recupero il periodo di svolgimento dal "+periodoSvolgimento.get(0)+" al "+periodoSvolgimento.get(1));
+		  programmazioneCorso = ds.getProgrammazioneCorso(idCorso);
+		  System.out.println("Recupero la programmazione settimanale, size = "+programmazioneCorso.size());
+		  for(int i=0;i<programmazioneCorso.size();i++)
+			  System.out.println("il "+programmazioneCorso.get(i).getG_sett()+" dalle "+programmazioneCorso.get(i).getOra_i()+" alle "+programmazioneCorso.get(i).getOra_f());
+		  materialeCorso = ds.getMaterialeCorso(idCorso);
 		  
 	    }
 	  return "corso";
@@ -135,5 +156,13 @@ public String getNomeCorso() {
 
 public List<Docente> getListaDocenti() {
 	return listaDocenti;
+}
+
+public List<ProgrammazioneCorso> getProgrammazioneCorso() {
+	return programmazioneCorso;
+}
+
+public ArrayList<Materiale> getMaterialeCorso() {
+	return materialeCorso;
 }
 }

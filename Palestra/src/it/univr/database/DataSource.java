@@ -5,6 +5,7 @@ import it.univr.UserBean;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -90,6 +91,13 @@ public class DataSource implements Serializable {
     bean.setDescrizione(rs.getString("descrizione"));
     return bean;
   }
+  
+  private Corso makeCorsiStudenteBean(ResultSet rs) throws SQLException{
+	  Corso bean = new Corso();
+	  bean.setNome_corso(rs.getString("nome"));
+	  return bean;
+  }
+  
 
   private Corso makeCorsoDettaglioBean( ResultSet rs ) throws SQLException {
 	    Corso bean = new Corso();
@@ -116,6 +124,25 @@ public class DataSource implements Serializable {
   		return bean;
   }
   	
+  	private ProgrammazioneCorso makeProgrammazioneCorso( ResultSet rs ) throws SQLException {
+  		ProgrammazioneCorso bean = new ProgrammazioneCorso();
+  		bean.setG_sett( rs.getString( 1 ) );
+  		bean.setOra_i(rs.getTime(2));
+  		bean.setOra_f(rs.getTime(3));
+
+  		return bean;
+  }
+ 
+  	private Materiale makeMaterialeCorso( ResultSet rs ) throws SQLException {
+  		Materiale bean = new Materiale();
+  		bean.setId(rs.getInt("id"));
+  		bean.setPath(rs.getString("path"));
+  		bean.setNome(rs.getString("nome"));
+  		bean.setTipo(rs.getString("tipo"));
+  		bean.setFormato(rs.getString("formato"));
+  		return bean;
+  }
+  	
   	private Docente makeDocenteBean( ResultSet rs ) throws SQLException {
   		Docente bean = new Docente();
   		bean.setCodice(rs.getInt("codice"));
@@ -125,12 +152,12 @@ public class DataSource implements Serializable {
   		return bean;
   }
   	
-  private UserBean makeUserBean(ResultSet rs) throws SQLException {
-	  UserBean bean = new UserBean();
+  private Utente makeUserBean(ResultSet rs) throws SQLException {
+	  Utente bean = new Utente();
 	  bean.setNome(rs.getString("nome"));
 	  bean.setCognome(rs.getString("cognome"));
 	  bean.setDn(rs.getDate("dn"));
-	  bean.setEmail(rs.getString("email"));
+	  bean.setMail(rs.getString("email"));
 	  
 	  return bean;
 	  
@@ -163,19 +190,19 @@ public class DataSource implements Serializable {
   public  List<Corso> getCorsi( String tipoCorso ) {
     // Dichiarazione delle variabili necessarie
     Connection con = null;
-    PreparedStatement pstmt = null;
+    PreparedStatement pstm = null;
     ResultSet rs = null;
     List<Corso> result = new ArrayList<Corso>();
     try {
       // tentativo di connessione al database
       con = getConnection();
       // connessione riuscita, ottengo l'oggetto per l'esecuzione dell'interrogazione.
-      pstmt = con.prepareStatement( MyQuery.getqSelectCorso() );
-      pstmt.clearParameters();
+      pstm = con.prepareStatement( MyQuery.getqSelectCorso() );
+      pstm.clearParameters();
       // imposto i parametri della query
-      pstmt.setString( 1, tipoCorso );
+      pstm.setString( 1, tipoCorso );
       // eseguo la query
-      rs = pstmt.executeQuery();
+      rs = pstm.executeQuery();
       // memorizzo il risultato dell'interrogazione in Vector di Bean
    
       
@@ -188,6 +215,8 @@ public class DataSource implements Serializable {
 
     } finally { // alla fine chiudo la connessione.
       try {
+    	  rs.close();
+     	 pstm.close();
         con.close();
       } catch( SQLException sqle1 ) {
         sqle1.printStackTrace();
@@ -217,6 +246,8 @@ public class DataSource implements Serializable {
 
 	      } finally { 
 	        try {
+	        	 rs.close();
+	        	 pstm.close();
 	          con.close();
 	        } catch( SQLException sqle1 ) {
 	          sqle1.printStackTrace();
@@ -246,6 +277,8 @@ public class DataSource implements Serializable {
 
 	      } finally { 
 	        try {
+	        	 rs.close();
+	        	 pstm.close();
 	          con.close();
 	        } catch( SQLException sqle1 ) {
 	          sqle1.printStackTrace();
@@ -276,6 +309,8 @@ public class DataSource implements Serializable {
 
 	      } finally { 
 	        try {
+	        	 rs.close();
+	        	 pstm.close();
 	          con.close();
 	        } catch( SQLException sqle1 ) {
 	          sqle1.printStackTrace();
@@ -308,6 +343,8 @@ public List<TipoCorso> getTipiCorso() {
 
     } finally { 
       try {
+    	  rs.close();
+    	  stmt.close();
         con.close();
       } catch( SQLException sqle1 ) {
         sqle1.printStackTrace();
@@ -317,143 +354,36 @@ public List<TipoCorso> getTipiCorso() {
   }
 
   
-  public boolean checkLogin(String email, String password){
+  public ArrayList<Utente> checkLogin(String email, String password){
 	  Connection con = null;
 	  PreparedStatement pstm = null;
 	  ResultSet rs = null;
+	  ArrayList<Utente> result = new ArrayList<Utente>();
 	  try{
 		 con = getConnection();
 		 pstm = con.prepareStatement(MyQuery.getqSelectLogin());
 		 pstm.setString(1, email);
 		 pstm.setString(2, password);
 		 rs = pstm.executeQuery();
-		 if(rs.next())
-			 return true;
-		 else
-			 return false;
-		 
-		 
+		 if(rs.next()){
+			 result.add( makeUserBean(rs));
+		 }else result = null;
 	  }catch(SQLException e){
 	  	  e.printStackTrace();
-	  return false;
+	
 	  }finally{
 		  try {
+			  rs.close();
+		    	pstm.close();
 			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	  }
+	  return result;
   }
   
-  /**
-   * Metodo per il recupero della/e facolta' di appartenenza del corso di studi
-   * con l'id specificato.
-   *
-   * @param id
-   * @return
-   */
-//  public String getFacoltaCorso( int id ) {
-//    // dichiarazione delle variabili
-//    Connection con = null;
-//    PreparedStatement pstmt = null;
-//    ResultSet rs = null;
-//    String result = null;
-//
-//    try {
-//      // tentativo di connessione al database
-//      con = DriverManager.getConnection( url, user, passwd );
-//      // Connessione riuscita, ottengo l'oggetto per l'esecuzione
-//      // dell'interrogazione.
-//      pstmt = con.prepareStatement( csf );
-//      pstmt.clearParameters();
-//      pstmt.setInt( 1, id );
-//      rs = pstmt.executeQuery();
-//
-//      // memorizzo il risultato dell'interrogazione nel Bean
-//      if( rs.next() ) {
-//        result = rs.getString( "Nome" );
-//      }
-//
-//    } catch( SQLException sqle ) { // catturo le eventuali eccezioni!
-//      sqle.printStackTrace();
-//
-//    } finally { // alla fine chiudo la connessione.
-//      try {
-//        con.close();
-//      } catch( SQLException sqle1 ) {
-//        sqle1.printStackTrace();
-//      }
-//    }
-//    return result;
-//  }
-//  
-//  public List<PresideFacolta> getPresideFacolta() {
-//	    // dichiarazione delle variabili
-//	    Connection con = null;
-//	    Statement stmt = null;
-//	    ResultSet rs = null;
-//	    List<PresideFacolta> result = new ArrayList<PresideFacolta>();
-//
-//	    try {
-//	      // tentativo di connessione al database
-//	      con = DriverManager.getConnection( url, user, passwd );
-//	      // connessione riuscita, ottengo l'oggetto per l'esecuzione dell'interrogazione.
-//	      stmt = con.createStatement();
-//	      // eseguo l'interrogazione desiderata
-//	      rs = stmt.executeQuery( q2 );
-//	      // memorizzo il risultato dell'interrogazione nel Vector
-//	      while( rs.next() ) {
-//	        result.add( makePFBean( rs ) );
-//	      }
-//
-//	    } catch( SQLException sqle ) { // catturo le eventuali eccezioni!
-//	      sqle.printStackTrace();
-//
-//	    } finally { // alla fine chiudo la connessione.
-//	      try {
-//	        con.close();
-//	      } catch( SQLException sqle1 ) {
-//	        sqle1.printStackTrace();
-//	      }
-//	    }
-//	    return result;
-//	  }
-//  
-//  public String getDettaglioPreside( String nomef ) {
-//	    // dichiarazione delle variabili
-//	    Connection con = null;
-//	    PreparedStatement pstmt = null;
-//	    ResultSet rs = null;
-//	    String result = null;
-//
-//	    try {
-//	      // tentativo di connessione al database
-//	      con = DriverManager.getConnection( url, user, passwd );
-//	      // Connessione riuscita, ottengo l'oggetto per l'esecuzione
-//	      // dell'interrogazione.
-//	      pstmt = con.prepareStatement( dettaglioPreside );
-//	      pstmt.clearParameters();
-//	      pstmt.setString( 1, nomef );
-//	      rs = pstmt.executeQuery();
-//
-//	      // memorizzo il risultato dell'interrogazione nel Bean
-//	      if( rs.next() ) {
-//	        result = rs.getString( "nomep" ) + " "+rs.getString("cognomep");
-//	      }
-//
-//	    } catch( SQLException sqle ) { // catturo le eventuali eccezioni!
-//	      sqle.printStackTrace();
-//
-//	    } finally { // alla fine chiudo la connessione.
-//	      try {
-//	        con.close();
-//	      } catch( SQLException sqle1 ) {
-//	        sqle1.printStackTrace();
-//	      }
-//	    }
-//	    return result;
-//	  }
   
   public Connection getConnection(){
 	  
@@ -491,6 +421,8 @@ public int getNumeroIscrittiCorso(int idCorso) {
 
     } finally { 
       try {
+    	  rs.close();
+      	pstm.close();
         con.close();
       } catch( SQLException sqle1 ) {
         sqle1.printStackTrace();
@@ -522,6 +454,8 @@ public String getNomeCorso(int idCorso) {
 
     } finally { 
       try {
+    	  rs.close();
+      	pstm.close();
         con.close();
       } catch( SQLException sqle1 ) {
         sqle1.printStackTrace();
@@ -549,7 +483,8 @@ public String getObiettiviFormativiCorso(int idCorso) {
       sqle.printStackTrace();
 
     } finally { 
-      try {
+      try {rs.close();
+  	pstm.close();
         con.close();
       } catch( SQLException sqle1 ) {
         sqle1.printStackTrace();
@@ -557,6 +492,187 @@ public String getObiettiviFormativiCorso(int idCorso) {
     }
     return result;
   }
+
+
+public List<Date> getPeriodoSvolgimentoCorso(int idCorso) {
+	Connection con = null;
+    PreparedStatement pstm = null;
+    ResultSet rs = null;
+    List<Date> result =new ArrayList<Date>(); 
+    
+    try {
+      con = getConnection();
+      pstm = con.prepareStatement(MyQuery.getqSelectPeriodoCorso());
+      pstm.setInt(1, idCorso);
+      rs = pstm.executeQuery();
+      
+      if( rs.next() ) {
+    	  result.add(rs.getDate(1));
+    	  result.add(rs.getDate(2));
+       
+      }
+
+    } catch( SQLException sqle ) { 
+      sqle.printStackTrace();
+
+    } finally { 
+      try {
+    	rs.close();
+    	pstm.close();
+        con.close();
+      } catch( SQLException sqle1 ) {
+        sqle1.printStackTrace();
+      }
+    }
+    return result;
+}
+
+
+public ArrayList<ProgrammazioneCorso> getProgrammazioneCorso(int idCorso) {
+	Connection con = null;
+    PreparedStatement pstm1 = null;
+    Statement stm = null;
+    ResultSet rs = null;
+    ArrayList<ProgrammazioneCorso> result =new ArrayList<ProgrammazioneCorso>(); 
+    System.out.println("sono nel metodono programmazione corso");
+    try {
+    
+      System.out.println("sono nel try");
+      con = getConnection();
+      
+     
+      pstm1 = con.prepareStatement(MyQuery.getqSelectProgrammazioneCorso());
+      pstm1.setInt(1, idCorso);
+      rs = pstm1.executeQuery();
+      pstm1.clearParameters();
+
+     while(rs.next() ) {
+    	  result.add(makeProgrammazioneCorso(rs));
+    	       System.out.println("size di result="+result.size());
+      }
+
+    } catch( SQLException sqle ) { 
+      sqle.printStackTrace();
+
+    } finally { 
+      try {
+    	rs.close();
+      	pstm1.close();
+        con.close();
+      } catch( SQLException sqle1 ) {
+        sqle1.printStackTrace();
+      }
+    }
+    return result;
+}
+
+
+public ArrayList<Materiale> getMaterialeCorso(int idCorso) {
+	Connection con = null;
+    PreparedStatement pstm1 = null;
+    ResultSet rs = null;
+    ArrayList<Materiale> result =new ArrayList<Materiale>(); 
+    try {
+   
+      con = getConnection();
+      
+     
+      pstm1 = con.prepareStatement(MyQuery.getqSelectMaterialeCorso());
+      pstm1.setInt(1, idCorso);
+      rs = pstm1.executeQuery();
+      pstm1.clearParameters();
+
+     while(rs.next() ) {
+    	  result.add(makeMaterialeCorso(rs));
+    	      
+      }
+
+    } catch( SQLException sqle ) { 
+      sqle.printStackTrace();
+
+    } finally { 
+      try {
+    	rs.close();
+      	pstm1.close();
+        con.close();
+      } catch( SQLException sqle1 ) {
+        sqle1.printStackTrace();
+      }
+    }
+    return result;
+}
+
+
+public ArrayList<Corso> getListaCorsiUtente(String email) {
+	Connection con = null;
+    PreparedStatement pstm1 = null;
+    ResultSet rs = null;
+    ArrayList<Corso> result =new ArrayList<Corso>(); 
+    try {
+   
+      con = getConnection();
+      
+     
+      pstm1 = con.prepareStatement(MyQuery.getqSelectCorsiPerStudente());
+      pstm1.setString(1, email);
+      rs = pstm1.executeQuery();
+      pstm1.clearParameters();
+
+     while(rs.next() ) {
+    	  result.add(makeCorsiStudenteBean(rs));
+    	      
+      }
+
+    } catch( SQLException sqle ) { 
+      sqle.printStackTrace();
+
+    } finally { 
+      try {
+    	rs.close();
+      	pstm1.close();
+        con.close();
+      } catch( SQLException sqle1 ) {
+        sqle1.printStackTrace();
+      }
+    }
+    return result;
+}
+
+
+public ArrayList<Materiale> getMaterialeUtente(String email) {
+	Connection con = null;
+    PreparedStatement pstm1 = null;
+    ResultSet rs = null;
+    ArrayList<Materiale> result =new ArrayList<Materiale>(); 
+    try {
+   
+      con = getConnection();
+      
+     
+      pstm1 = con.prepareStatement(MyQuery.getqSelectMaterialePerStudente());
+      pstm1.setString(1, email);
+      rs = pstm1.executeQuery();
+      pstm1.clearParameters();
+
+     while(rs.next() ) {
+    	  result.add(makeMaterialeCorso(rs));
+    	      
+      }
+
+    } catch( SQLException sqle ) { 
+      sqle.printStackTrace();
+
+    } finally { 
+      try {
+    	rs.close();
+      	pstm1.close();
+        con.close();
+      } catch( SQLException sqle1 ) {
+        sqle1.printStackTrace();
+      }
+    }
+    return result;
+}
 
 
 
