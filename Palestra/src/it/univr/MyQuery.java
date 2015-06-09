@@ -81,6 +81,12 @@ static String qInsertIntoProgrammazione = " insert into programmazione select * 
 
 // fine Query per il simulatore
 
+// Query per statistiche
+
+static String qStatIscrittiCorsi = " select c.nome, count(i.id_corso) as numero_iscritti from corsi c join iscrizione i on c.id = i.id_corso group by i.id_corso,c.nome ";
+
+// fine Query per statistiche
+
 public static String getqSelectPeriodoCorso() {
 	return qSelectPeriodoCorso;
 }
@@ -147,6 +153,11 @@ public static String getqSelectCorsiPerStudente() {
 
 public static String getqSelectMaterialePerStudente() {
 	return qSelectMaterialePerStudente;
+}
+
+
+public static String getqStatIscrittiCorsi() {
+	return qStatIscrittiCorsi;
 }
 
 	

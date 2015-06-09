@@ -139,6 +139,7 @@ public class Simulatore {
 			System.out.println("Cancellazione tabella iscrizioni: " + !stm.execute(" truncate table iscrizione "));
 			System.out.println("Cancellazione tabella studenti: " + !stm.execute("delete from studente"));
 
+//			System.out.println("Accodo i PreparedStatment in batch...");
 			for(int i = 0;i<listaUtenti.size();i++){
 				
 				pstm.setString(1, listaUtenti.get(i).getNome());
@@ -147,9 +148,13 @@ public class Simulatore {
 				pstm.setString(4, listaUtenti.get(i).getLogin());
 				pstm.setString(5, listaUtenti.get(i).getPassword());
 				pstm.setString(6, listaUtenti.get(i).getMail());
+//				pstm.addBatch();
+//				System.out.println("inserito batch n°:"+(i+1));
 				System.out.println("Inserimento studente # "+(i)+": "+listaUtenti.get(i).getNome()+" "+listaUtenti.get(i).getCognome()+" -> esito = "+!pstm.execute());
 				pstm.clearParameters();
 			}
+//			System.out.println("Fine accodamento in batch...");
+//			System.out.println("Eseguo l'inserimento massivo: -> esito = "+!pstm.execute());
 		
 			
 			/* fine di inserimento gli studenti */
