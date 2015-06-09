@@ -30,7 +30,7 @@ public class Simulatore {
 		Tools.clearFile(nomeFileCsv);
 
 		int nUtentiDaCreare = 300;
-		int maxIscrizioniConsentite = 3;
+		int maxIscrizioniConsentite = 7;
 
 		System.out.println("-----------------------------------------------------------");
 		ArrayList<Utente> listaUtenti = new ArrayList<Utente>();
@@ -93,7 +93,7 @@ public class Simulatore {
 			msg = appendString(msg, "Cognome.........: "+listaUtenti.get(i).getCognome());
 			System.out.println("Data di nascita.: "+listaUtenti.get(i).getDn());
 			msg = appendString(msg, "Data di nascita.: "+listaUtenti.get(i).getDn());
-			System.out.println("Eta'.............: "+anno);
+			System.out.println("Eta'............: "+anno);
 			msg = appendString(msg, "Eta'.............: "+anno);
 			System.out.println("Mail............: "+listaUtenti.get(i).getMail());
 			msg = appendString(msg, "Mail............: "+listaUtenti.get(i).getMail());
@@ -126,7 +126,16 @@ public class Simulatore {
 
 			PreparedStatement pstm = con.prepareStatement(MyQuery.qInsertStudente);
 //			PreparedStatement pstmDocenti = con.prepareStatement(MyQuery.qInsertDocente);
-			System.out.println("Cancello le iscrizioni...");
+			System.out.println("Cancellazione tabelle:");
+			
+			System.out.println("Cancello supportodidattico2: "+!stm.execute(MyQuery.qDelSupportoDidattico2));
+			System.out.println("Salvataggio supportodidattico2: "+!stm.execute(MyQuery.qInsertIntoSupportoDidattico2));
+			System.out.println("Cancello supportodidattico: "+!stm.execute(MyQuery.qDelSupportoDidattico));
+			
+			System.out.println("Cancello programmazione2: "+!stm.execute(MyQuery.qDelProgrammazione2));
+			System.out.println("Salvataggio programmazione2: "+!stm.execute(MyQuery.qInsertIntoProgrammazione2));
+			System.out.println("Cancello programmazione: "+!stm.execute(MyQuery.qDelProgrammazione));
+			
 			System.out.println("Cancellazione tabella iscrizioni: " + !stm.execute(" truncate table iscrizione "));
 			System.out.println("Cancellazione tabella studenti: " + !stm.execute("delete from studente"));
 
@@ -224,7 +233,8 @@ public class Simulatore {
 				pstm2.clearParameters();
 				pstm2.setInt(1,id_corso);
 				pstm2.setString(2, listaUtenti.get(i).getMail());
-				pstm2.setDate(3, new java.sql.Date(listaUtenti.get(i).getDn().getTime()));
+//				pstm2.setDate(3, new java.sql.Date(listaUtenti.get(i).getDn().getTime()));
+				pstm2.setDate(3, new java.sql.Date(Tools.getDataIscrizioneRandom().getTime()));
 				pstm2.execute();
 				System.out.println("Iscrizione avvenuta per: "+listaUtenti.get(i).getNome()+" "+listaUtenti.get(i).getCognome());
 				
@@ -239,9 +249,9 @@ public class Simulatore {
 	
 		
 	
-		
+		System.out.println("Ripristino supportodidattico: "+!stm.execute(MyQuery.qInsertIntoSupportoDidattico));
 			
-			
+		System.out.println("Ripristino programmazione: "+!stm.execute(MyQuery.qInsertIntoProgrammazione));	
 			
 			
 			

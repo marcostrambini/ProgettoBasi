@@ -3,7 +3,8 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title>Informazioni sul Corso</title>
@@ -28,33 +29,33 @@
 		<div class="row" style="padding-top: 10px">
 			<div >
 				<h:form>
-					<h:dataTable value="#{cb.corsiSelezionati}" var="c" cellspacing="10" >
+					<p:dataTable value="#{cb.corsiSelezionati}" var="c" cellspacing="10"  >
 
-						<h:column>
+						<p:column>
 							<f:facet name="header">Codice:</f:facet>
 						
 							<h:commandLink value="#{c.id}" action="#{cb.recuperaDettagliCorso(c.id)}"/>
-						</h:column>
+						</p:column>
 
 
-						<h:column >
+						<p:column >
 							<f:facet name="header"  >Nome</f:facet>
 							#{c.nome_corso}
-						</h:column>
+						</p:column>
 
-						<h:column>
+						<p:column>
 							<f:facet name="header">Docente Responsabile</f:facet>
 							#{c.nome_docente} #{c.cognome_docente}
-						</h:column>
+						</p:column>
 
-						<h:column>
+						<p:column>
 							<f:facet name="header">Periodo di svolgimento</f:facet>
 							dal #{c.data_i} al #{c.data_f}
-						</h:column>
+						</p:column>
 
 
 
-					</h:dataTable>
+					</p:dataTable>
 				</h:form>
 
 			</div>

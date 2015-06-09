@@ -4,7 +4,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 		
 <h:head>
 	<title>Informazioni sul Corso</title>
@@ -31,46 +32,46 @@
 		
 		
 		<h:form>
-					<h:dataTable value="#{cb.listaDocenti}" var="d" cellspacing="10" >
-						<h:column>
+					<p:dataTable value="#{cb.listaDocenti}" var="d" cellspacing="10" style="width:300px" >
+						<p:column>
 							<f:facet name="header">Docenti</f:facet>
 							#{d.nome} #{d.cognome }
-						</h:column>
-					</h:dataTable>
+						</p:column>
+					</p:dataTable>
 				</h:form>
 			<br/>	
 				
 		<h:form>
-			<h:dataTable value="#{cb.programmazioneCorso}" var="p" cellspacing="10" >
-				<h:column>
+			<p:dataTable value="#{cb.programmazioneCorso}" var="p" cellspacing="10" style="width:300px" >
+				<p:column>
 					<f:facet name="header">Programmazione settimanale: </f:facet>
 					il #{p.g_sett } dalle #{p.ora_i } alle #{p.ora_f }
-				</h:column>
-			</h:dataTable>
+				</p:column>
+			</p:dataTable>
 		</h:form>
 		<br/>	
 		<h4>Materiale a disposizione:</h4>
 		<h:form>
-			<h:dataTable value="#{cb.materialeCorso}" var="m" cellspacing="10" >
-				<h:column>
+			<p:dataTable value="#{cb.materialeCorso}" var="m" cellspacing="10" style="width:600px" >
+				<p:column>
 					<f:facet name="header">Nome </f:facet>
 					
 					<h:outputLink  value="#{m.path }"><h:outputText value="#{m.nome }"></h:outputText></h:outputLink>
 					
-				</h:column>
+				</p:column>
 				
-				<h:column>
+				<p:column>
 					<f:facet name="header">Tipo </f:facet>
 					#{m.tipo }
-				</h:column>
+				</p:column>
 				
-				<h:column>
+				<p:column>
 					<f:facet name="header">Formato </f:facet>
 					#{m.formato }
-				</h:column>
+				</p:column>
 				
 				
-			</h:dataTable>
+			</p:dataTable>
 		</h:form>		
 		
 		
@@ -81,23 +82,23 @@
 			<div >
 			<h4>Elenco degli iscritti:</h4>
 				<h:form>
-					<h:dataTable value="#{cb.listaIscritti}" var="i" cellspacing="10" >
+					<p:dataTable value="#{cb.listaIscritti}" var="i" cellspacing="10" >
 
-						<h:column>
+						<p:column>
 							<f:facet name="header">nome</f:facet>
 							#{i.nome}
-						</h:column>
+						</p:column>
 
-						<h:column >
+						<p:column >
 							<f:facet name="header"  >cognome</f:facet>
 							#{i.cognome}
-						</h:column>
+						</p:column>
 
-						<h:column>
+						<p:column>
 							<f:facet name="header">data di iscrizione</f:facet>
 							#{i.data_i}
-						</h:column>
-					</h:dataTable>
+						</p:column>
+					</p:dataTable>
 				</h:form>
 			</div>
 		</div>

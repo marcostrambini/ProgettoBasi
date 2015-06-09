@@ -111,6 +111,22 @@ public class Tools {
 		data =  formatter.parse(dataString);
 		return (java.util.Date) data;
     }
+	
+	static java.util.Date getDataIscrizioneRandom() throws ParseException {
+        GregorianCalendar gc = new GregorianCalendar();
+        int start = 2014;
+        int end = 2015;
+        int year = start + (int)Math.round(Math.random() * (end - start));
+        gc.set(gc.YEAR, year);
+        int dayOfYear = randBetween(1, gc.getActualMaximum(gc.DAY_OF_YEAR));
+        gc.set(gc.DAY_OF_YEAR, dayOfYear);
+        String dataString = (gc.get(gc.DAY_OF_MONTH) + "/" + (gc.get(gc.MONTH)+1) + "/" +  gc.get(gc.YEAR));
+        
+        java.util.Date data = null;
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		data =  formatter.parse(dataString);
+		return (java.util.Date) data;
+    }
 
 	public static int randBetween(int start, int end) {
         return start + (int)Math.round(Math.random() * (end - start));

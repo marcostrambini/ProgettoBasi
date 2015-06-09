@@ -38,7 +38,7 @@ public class CorsoBean implements Serializable {
   private ArrayList<ProgrammazioneCorso> programmazioneCorso;
   private ArrayList<Materiale> materialeCorso;
   private Corso corsoSelezionato;
-  private String nome;
+//  private String nome;
   private String tipoCorso;
   
   

@@ -59,12 +59,27 @@ static String qSelectMaterialeCorso = " select m.id,m.path,m.nome,m.tipo,m.forma
 									+ " from corsi c join supportodidattico s on c.id=s.id_corso join materiale m on s.id_materiale = m.id "
 									+ " where c.id = ? order by m.id";
 
-static String qSelectCorsiPerStudente = " select c.nome from corsi c join iscrizione i on c.id=i.id_corso join studente s on i.studente_email = s.email where s.email = ? ";
+static String qSelectCorsiPerStudente = " select c.id, c.nome from corsi c join iscrizione i on c.id=i.id_corso join studente s on i.studente_email = s.email where s.email = ? ";
 
 static String qSelectMaterialePerStudente = " select distinct(m.nome ), m.path,m.id,m.formato,m.tipo "
 										  + " from corsi c join iscrizione i on c.id=i.id_corso join studente s on i.studente_email = s.email join supportodidattico sup on sup.id_corso = c.id join materiale m on m.id=sup.id_materiale "
 										  + " where s.email = ?";
 
+
+// Query per il simulatore
+
+static String qDelSupportoDidattico2 = " delete from supportodidattico2 ";
+static String qInsertIntoSupportoDidattico2 = " insert into supportodidattico2 select * from supportodidattico ";
+static String qDelSupportoDidattico = " delete from supportodidattico ";
+static String qInsertIntoSupportoDidattico = " insert into supportodidattico select * from supportodidattico2 ";
+
+static String qDelProgrammazione2 = " delete from programmazione2 ";
+static String qInsertIntoProgrammazione2 = " insert into programmazione2 select * from programmazione ";
+static String qDelProgrammazione = " delete from programmazione ";
+static String qInsertIntoProgrammazione = " insert into programmazione select * from programmazione2 ";
+
+
+// fine Query per il simulatore
 
 public static String getqSelectPeriodoCorso() {
 	return qSelectPeriodoCorso;

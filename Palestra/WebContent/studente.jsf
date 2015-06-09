@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:b="http://bootsfaces.net/ui">
+	xmlns:p="http://primefaces.org/ui">
 	
 	
 	
@@ -41,23 +41,23 @@
 <div class="col-md-8">
 
 <h:form>
-			<h:dataTable value="#{user.utente}" var="u" cellspacing="10" >
-				<h:column>
+			<p:dataTable value="#{user.utente}" var="u" cellspacing="10" >
+				<p:column>
 					<f:facet name="header">Nome: </f:facet>
 						#{u.nome }
-				</h:column>
+				</p:column>
 				
-				<h:column>
+				<p:column>
 					<f:facet name="header">Cognome: </f:facet>
 					#{u.cognome }
-				</h:column>
+				</p:column>
 				
-				<h:column>
+				<p:column>
 					<f:facet name="header">Data di nascita: </f:facet>
 					#{u.dn }
-				</h:column>
+				</p:column>
 				
-			</h:dataTable>
+			</p:dataTable>
 		</h:form>		
 </div>
 </div>
@@ -66,29 +66,31 @@
 <div class="row">
 <div >
 <h:form>
-			<h:dataTable value="#{user.listaCorsi}" var="c" cellspacing="10" >
-				<h:column>
+			<p:dataTable value="#{user.listaCorsi}" var="c" cellspacing="10" style="width:300px">
+				<p:column>
 					<f:facet name="header">Corsi a cui sei iscritto: </f:facet>
-						#{c.nome_corso }
-				</h:column>
+					
+					<h:commandLink value="#{c.nome_corso }" action="#{cb.recuperaDettagliCorso(c.id)}"/>
+						
+				</p:column>
 				
 				
 				
-			</h:dataTable>
+			</p:dataTable>
 		</h:form>	
 </div>
 <br />
 <div >
 <h:form>
-			<h:dataTable value="#{user.listaMateriale}" var="m" cellspacing="10" >
-				<h:column>
+			<p:dataTable value="#{user.listaMateriale}" var="m" cellspacing="10" style="width:300px">
+				<p:column>
 					<f:facet name="header">Lista di materiali a disposizione: </f:facet>
 						<h:outputLink  value="#{m.path }"><h:outputText value="#{m.nome }"></h:outputText></h:outputLink>
-				</h:column>
+				</p:column>
 				
 				
 				
-			</h:dataTable>
+			</p:dataTable>
 		</h:form>
 </div>
 

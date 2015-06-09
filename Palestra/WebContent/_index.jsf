@@ -4,8 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:f="http://java.sun.com/jsf/core">
 
 
 
@@ -42,21 +41,20 @@
 		</div>
 		<div class="row" style="padding-top:10px">
 			<div class="col-md-10">
-			
 			<h:form>
-				<p:dataTable value="#{cb.tipoCorsi}" var="c" style="width:800px" >
+				<h:dataTable value="#{cb.tipoCorsi}" var="c" >
 
-					<p:column headerText="Nome" style="width:200px">
-						
+					<h:column>
+						<f:facet name="header">Nome</f:facet>
        					<h:commandLink value="#{c.nome}" action="#{cb.recuperaCorsi(c.nome)}" />
-     				</p:column>
+     				</h:column>
 					
-					<p:column headerText="Descrizione">
-						
-						 #{c.descrizione} 
+					<h:column>
+						<f:facet name="header">Descrizione</f:facet>
+						 #{c.descrizione}
 							
-					</p:column>
-				</p:dataTable>
+					</h:column>
+				</h:dataTable>
 			</h:form>
 			</div>
 		</div>

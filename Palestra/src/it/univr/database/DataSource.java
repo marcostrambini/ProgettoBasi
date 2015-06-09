@@ -94,6 +94,7 @@ public class DataSource implements Serializable {
   
   private Corso makeCorsiStudenteBean(ResultSet rs) throws SQLException{
 	  Corso bean = new Corso();
+	  bean.setId(rs.getInt("id"));
 	  bean.setNome_corso(rs.getString("nome"));
 	  return bean;
   }
