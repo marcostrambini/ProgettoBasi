@@ -3,19 +3,17 @@ package it.univr.database;
 
 import java.sql.Time;
 
-
+/**
+ * classe che rappresenta la programmazione dei corsi
+ * @author Mago
+ *
+ */
 public class ProgrammazioneCorso {
 
-
-	// === Properties ============================================================
 
 	private String g_sett;
 	private Time ora_i;
 	private Time ora_f;
-
-
-
-	// === Methods ===============================================================
 
 	public ProgrammazioneCorso() {
 

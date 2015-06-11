@@ -2,19 +2,17 @@ package it.univr.database;
 
 import java.sql.Date;
 
+/**
+ * classe che rappresenta gli iscritti
+ * @author Mago
+ *
+ */
 public class Iscritti {
 	
-	
-	 // === Properties ============================================================
-
-	 
 	  private String nome;
-	 
 	  private String cognome;
 	  private Date data_i;
 	 
-
-	  // === Methods ===============================================================
 
 	  public Iscritti() {
 				 

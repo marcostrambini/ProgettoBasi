@@ -3,7 +3,7 @@ package it.univr.database;
 import java.sql.Date;
 import java.util.List;
 
-public class CorsoDettaglio {
+public class _CorsoDettaglio {
 	
 	
 	 // === Properties ============================================================
@@ -19,7 +19,7 @@ public class CorsoDettaglio {
 
 	  // === Methods ===============================================================
 
-	  public CorsoDettaglio() {
+	  public _CorsoDettaglio() {
 		  
 		  id = 0;
 		  nome_corso = null;

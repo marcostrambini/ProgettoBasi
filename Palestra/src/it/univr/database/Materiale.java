@@ -3,21 +3,21 @@ package it.univr.database;
 
 
 
-
+/**
+ * classe che rappresenta i Materiali a disposizione
+ * @author Mago
+ *
+ */
 public class Materiale {
 
 
-	// === Properties ============================================================
-
-	private int id;
+    private int id;
 	private String path;
 	private String nome;
 	private String tipo;
 	private String formato;
 
 
-
-	// === Methods ===============================================================
 
 	public Materiale() {
 

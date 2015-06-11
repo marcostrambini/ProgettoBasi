@@ -14,23 +14,51 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 //import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
-
+/**
+ * classe Simulatore
+ * con questa classe è possibile alimentare la base di dati automaticamente per le tabelle più importanti
+ * è possibile creare un numero di studenti random da parametro
+ * per ogni studente è possibile indicare a quanti corsi al massimo può essere iscritto impostando il parametro adeguato
+ * il simulatore provvederà a creare il numero di studenti richiesti ed iscriverà a random su alcuni corsi per un numero di volte a random
+ * @author Mago
+ *
+ */
 public class Simulatore {
 
+	/**
+	 * metodo che appende la stringa che poi andrà scritta sul file di testo
+	 * @param nomeStringa
+	 * @param messaggio
+	 * @return
+	 */
 	public static String appendString(String nomeStringa, String messaggio){
 		return nomeStringa + "\n" + messaggio ;
 	}
 
+	/**
+	 * main del simulatore
+	 * @param args
+	 * @throws FileNotFoundException
+	 * @throws java.text.ParseException
+	 * @throws ClassNotFoundException
+	 */
 	public static void main(String[] args) throws FileNotFoundException, java.text.ParseException, ClassNotFoundException {
 		String nomeFile = "ListaNomi.txt";
 		String nomeFileCsv = "ListaNomi.csv";
-		Tools.creaFile(nomeFile);
-		Tools.clearFile(nomeFile);
-		Tools.creaFile(nomeFileCsv);
-		Tools.clearFile(nomeFileCsv);
+		String pathFile = "WebContent/file/";
+		Tools.creaFile(pathFile+nomeFile);
+		Tools.clearFile(pathFile+nomeFile);
+		Tools.creaFile(pathFile+nomeFileCsv);
+		Tools.clearFile(pathFile+nomeFileCsv);
 
+		/**
+		 * parametro numero di studenti da creare
+		 */
 		int nUtentiDaCreare = 300;
-		int maxIscrizioniConsentite = 7;
+		/**
+		 * parametro numero massimo di iscrizioni consentite a corsi differenti
+		 */
+		int maxIscrizioniConsentite = 5;
 
 		System.out.println("-----------------------------------------------------------");
 		ArrayList<Utente> listaUtenti = new ArrayList<Utente>();
@@ -104,14 +132,14 @@ public class Simulatore {
 
 			msgCsv = listaUtenti.get(i).getNome()+","+listaUtenti.get(i).getCognome()+","+listaUtenti.get(i).getDn()+","+
 					anno+","+listaUtenti.get(i).getMail()+","+listaUtenti.get(i).getLogin()+","+listaUtenti.get(i).getPassword();
-			//			Tools.scriviFile(nomeFileCsv, msgCsv);
+						Tools.scriviFile(pathFile+nomeFileCsv, msgCsv);
 
 
 		}
 
 		System.out.println("dimensioni dell'array utente: "+listaUtenti.size());
 		System.out.println("dimensioni dell'array csv: "+listCsv.size());
-		Tools.scriviFile(nomeFile, msg);
+		Tools.scriviFile(pathFile+nomeFile, msg);
 
 		/* Parte di inserimento nel database  */
 		DataSource ds =  new DataSource();

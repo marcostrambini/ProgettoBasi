@@ -33,37 +33,6 @@ public class DataSource implements Serializable {
   // Driver da utilizzare per la connessione e l'esecuzione delle query.
   private String driver = "org.postgresql.Driver";
 
-  // -- definizione delle query ------------------------------------------------
-
-  // recupera le principali info su tutti i corsi di studi
-//  private String css =
-//    "SELECT id, Codice, Nome FROM corsostudi ORDER BY Nome";
-
-  // recupera tutte le informazioni di un particolare corso di studi
-//  private String cs =
-//    "SELECT id,nome,codice,abbreviazione,durataanni,sede,informativa "
-//    + "FROM corsostudi "
-//    + "WHERE id=?";
-
-  // recupera la/e facolta' di un particolare corso di studi
-//  private String csf =
-//    "SELECT DISTINCT f.nome "
-//    + "FROM facolta f INNER JOIN corsoinfacolta csf "
-//    + "ON (f.id=csf.id_facolta) "
-//    + "WHERE csf.id_corsostudi=?";
-
-  //recupera il nome, codice, nome preside delle facolta
-//  private String q2 = 
-//		  "select f.nome as nomef, f.codice, f.indirizzo,p.nome as nomep,p.cognome as cognomep "
-//		+ "from facolta f join persona p "
-//        + "on p.id = f.id_preside_persona";
-//
-//  private String dettaglioPreside = 
-//		  "select p.nome as nomep,p.cognome as cognomep "
-//		  +"from facolta f join persona p "
-//		  +"on p.id = f.id_preside_persona "
-//		  +"where f.nome = ?";
-  
   
   // === Methods ===============================================================
 
@@ -79,6 +48,12 @@ public class DataSource implements Serializable {
   }
 
 
+  /**
+   * restituisce un bean di Corso
+   * @param rs
+   * @return
+   * @throws SQLException
+   */
   private Corso makeCorsoBean( ResultSet rs ) throws SQLException {
     Corso bean = new Corso();
     bean.setId( rs.getInt( "id"));
@@ -92,6 +67,12 @@ public class DataSource implements Serializable {
     return bean;
   }
   
+  /**
+   * restituisce un bean di Corso ristretto
+   * @param rs
+   * @return
+   * @throws SQLException
+   */
   private Corso makeCorsiStudenteBean(ResultSet rs) throws SQLException{
 	  Corso bean = new Corso();
 	  bean.setId(rs.getInt("id"));
@@ -99,7 +80,12 @@ public class DataSource implements Serializable {
 	  return bean;
   }
   
-
+  /**
+   * restituice un bean di Corso con dettagli
+   * @param rs
+   * @return
+   * @throws SQLException
+   */
   private Corso makeCorsoDettaglioBean( ResultSet rs ) throws SQLException {
 	    Corso bean = new Corso();
 	    bean.setId( rs.getInt( "id"));
@@ -116,7 +102,12 @@ public class DataSource implements Serializable {
   
   
   
-
+  	/**
+  	 * restituisce un bean di TipoCorso
+  	 * @param rs
+  	 * @return
+  	 * @throws SQLException
+  	 */
   	private TipoCorso makeTipoCorsoBean( ResultSet rs ) throws SQLException {
   		TipoCorso bean = new TipoCorso();
   		bean.setNome( rs.getString( "nome" ) );
@@ -125,6 +116,12 @@ public class DataSource implements Serializable {
   		return bean;
   }
   	
+  	/**
+  	 * restituisce un bean per la programmazione dei corsi
+  	 * @param rs
+  	 * @return
+  	 * @throws SQLException
+  	 */
   	private ProgrammazioneCorso makeProgrammazioneCorso( ResultSet rs ) throws SQLException {
   		ProgrammazioneCorso bean = new ProgrammazioneCorso();
   		bean.setG_sett( rs.getString( 1 ) );
@@ -134,6 +131,12 @@ public class DataSource implements Serializable {
   		return bean;
   }
  
+  	/**
+  	 * restituisce un bean di tipo Materiale
+  	 * @param rs
+  	 * @return
+  	 * @throws SQLException
+  	 */
   	private Materiale makeMaterialeCorso( ResultSet rs ) throws SQLException {
   		Materiale bean = new Materiale();
   		bean.setId(rs.getInt("id"));
@@ -144,6 +147,12 @@ public class DataSource implements Serializable {
   		return bean;
   }
   	
+  	/**
+  	 * restituisce un bean di tipo Docente
+  	 * @param rs
+  	 * @return
+  	 * @throws SQLException
+  	 */
   	private Docente makeDocenteBean( ResultSet rs ) throws SQLException {
   		Docente bean = new Docente();
   		bean.setCodice(rs.getInt("codice"));
@@ -153,6 +162,12 @@ public class DataSource implements Serializable {
   		return bean;
   }
   	
+  /**
+   * restituisce un bean di tipo Utente
+   * @param rs
+   * @return
+   * @throws SQLException
+   */
   private Utente makeUserBean(ResultSet rs) throws SQLException {
 	  Utente bean = new Utente();
 	  bean.setNome(rs.getString("nome"));
@@ -165,6 +180,12 @@ public class DataSource implements Serializable {
 	  
   }
   
+  /**
+   * restituisce un bean di tipo Iscritti
+   * @param rs
+   * @return
+   * @throws SQLException
+   */
   private Iscritti makeIscrittiCorsoBean(ResultSet rs) throws SQLException {
 	  Iscritti bean = new Iscritti();
 	  bean.setNome(rs.getString("nome"));
@@ -172,22 +193,14 @@ public class DataSource implements Serializable {
 	  bean.setData_i(rs.getDate("data_i"));
 	  return bean;
 }
-//  
-//
-//  private PresideFacolta makePFBean( ResultSet rs ) throws SQLException {
-//	  PresideFacolta bean = new PresideFacolta();
-//	  bean.setNomef(rs.getString("nomef"));
-//	  bean.setCodice(rs.getString("codice"));
-//	  bean.setIndirizzo(rs.getString("indirizzo"));
-//	  bean.setNomep(rs.getString("nomep"));
-//	  bean.setCognomep(rs.getString("cognomep"));
-//	  
-//      return bean;
-//  }
-
-  // ===========================================================================
 
 
+
+  /**
+   * metodo che recupera una lista di Corsi
+   * @param tipoCorso
+   * @return
+   */
   public  List<Corso> getCorsi( String tipoCorso ) {
     // Dichiarazione delle variabili necessarie
     Connection con = null;
@@ -226,7 +239,11 @@ public class DataSource implements Serializable {
     return result;
   }
 
-
+  /**
+   * metodo che recupera una lista di Iscritti
+   * @param idCorso
+   * @return
+   */
   public List<Iscritti> getIscrittiCorso(int idCorso) {
 	  Connection con = null;
 	    PreparedStatement pstm = null;
@@ -257,6 +274,11 @@ public class DataSource implements Serializable {
 	      return result;
 	    }
    
+  /**
+   * metodo che recupera una lista di Corso
+   * @param idCorso
+   * @return
+   */
   public List<Corso> getDettagliCorsi(int idCorso) {
 	  Connection con = null;
 	  PreparedStatement pstm = null;
@@ -289,6 +311,11 @@ public class DataSource implements Serializable {
 	    }
 	
 
+  /**
+   * metodo che recupera una lista di Docente
+   * @param idCorso
+   * @return
+   */
   public List<Docente> getListaDocenti(int idCorso) {
 	  Connection con = null;
 	  PreparedStatement pstm = null;
@@ -322,7 +349,10 @@ public class DataSource implements Serializable {
 	
  
   
-
+/**
+ * metodo che recupera una lista di TipoCorso
+ * @return
+ */
 public List<TipoCorso> getTipiCorso() {
     // dichiarazione delle variabili
     Connection con = null;
@@ -354,7 +384,12 @@ public List<TipoCorso> getTipiCorso() {
     return result;
   }
 
-  
+  /**
+   * metodo che recupera una lista di Utente
+   * @param email
+   * @param password
+   * @return
+   */
   public ArrayList<Utente> checkLogin(String email, String password){
 	  Connection con = null;
 	  PreparedStatement pstm = null;
@@ -385,7 +420,43 @@ public List<TipoCorso> getTipiCorso() {
 	  return result;
   }
   
+  /**
+   * metodo che recupera una lista di Utente
+   * @return
+   */
+  public ArrayList<Utente> getStudenti(){
+	  Connection con = null;
+	  Statement stm = null;
+	  ResultSet rs = null;
+	  ArrayList<Utente> result = new ArrayList<Utente>();
+	  try{
+		 con = getConnection();
+		stm=con.createStatement();
+		
+		 rs =stm.executeQuery(MyQuery.getqSelectStudenti());
+		 while(rs.next()){
+			 result.add( makeUserBean(rs));
+		 }
+	  }catch(SQLException e){
+	  	  e.printStackTrace();
+	
+	  }finally{
+		  try {
+			  rs.close();
+		    	stm.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  }
+	  return result;
+  }
   
+  /**
+   * metodo che restituisce un oggetto di tipo Connection al db di riferimento
+   * @return
+   */
   public Connection getConnection(){
 	  
 	  try {
@@ -398,7 +469,11 @@ public List<TipoCorso> getTipiCorso() {
 	  
   }
 
-
+/**
+ * metodo che restituisce il nuemro di iscritti ad un determinato corso
+ * @param idCorso
+ * @return
+ */
 public int getNumeroIscrittiCorso(int idCorso) {
 	Connection con = null;
     PreparedStatement pstm = null;
@@ -432,7 +507,11 @@ public int getNumeroIscrittiCorso(int idCorso) {
     return result;
   }
 
-
+/**
+ * metodo che restituisce il nome di un corso dato l'id
+ * @param idCorso
+ * @return
+ */
 public String getNomeCorso(int idCorso) {
 	Connection con = null;
     PreparedStatement pstm = null;
@@ -465,6 +544,11 @@ public String getNomeCorso(int idCorso) {
     return result;
   }
 
+/**
+ * metodo che restituisce gli obiettivi formativi di un determinato corso
+ * @param idCorso
+ * @return
+ */
 public String getObiettiviFormativiCorso(int idCorso) {
 	Connection con = null;
     PreparedStatement pstm = null;
@@ -494,7 +578,11 @@ public String getObiettiviFormativiCorso(int idCorso) {
     return result;
   }
 
-
+/**
+ * metodo che restituisce il periodo di svolgimento di un determinato corso
+ * @param idCorso
+ * @return
+ */
 public List<Date> getPeriodoSvolgimentoCorso(int idCorso) {
 	Connection con = null;
     PreparedStatement pstm = null;
@@ -528,11 +616,14 @@ public List<Date> getPeriodoSvolgimentoCorso(int idCorso) {
     return result;
 }
 
-
+/**
+ * metodo che restituisce la lista di programmazione di un determinato corso
+ * @param idCorso
+ * @return
+ */
 public ArrayList<ProgrammazioneCorso> getProgrammazioneCorso(int idCorso) {
 	Connection con = null;
     PreparedStatement pstm1 = null;
-    Statement stm = null;
     ResultSet rs = null;
     ArrayList<ProgrammazioneCorso> result =new ArrayList<ProgrammazioneCorso>(); 
     System.out.println("sono nel metodono programmazione corso");
@@ -567,7 +658,11 @@ public ArrayList<ProgrammazioneCorso> getProgrammazioneCorso(int idCorso) {
     return result;
 }
 
-
+/**
+ * metodo che restituisce la lista dei materiali utilizzati da u determinato corso
+ * @param idCorso
+ * @return
+ */
 public ArrayList<Materiale> getMaterialeCorso(int idCorso) {
 	Connection con = null;
     PreparedStatement pstm1 = null;
@@ -603,7 +698,11 @@ public ArrayList<Materiale> getMaterialeCorso(int idCorso) {
     return result;
 }
 
-
+/**
+ * metodo che restituisce la lista dei corsi a cui è iscritto uno studente
+ * @param email
+ * @return
+ */
 public ArrayList<Corso> getListaCorsiUtente(String email) {
 	Connection con = null;
     PreparedStatement pstm1 = null;
@@ -639,7 +738,11 @@ public ArrayList<Corso> getListaCorsiUtente(String email) {
     return result;
 }
 
-
+/**
+ * metodo che restituisce la lista dei materiali a disposizione di un singolo utente
+ * @param email
+ * @return
+ */
 public ArrayList<Materiale> getMaterialeUtente(String email) {
 	Connection con = null;
     PreparedStatement pstm1 = null;
@@ -667,6 +770,40 @@ public ArrayList<Materiale> getMaterialeUtente(String email) {
       try {
     	rs.close();
       	pstm1.close();
+        con.close();
+      } catch( SQLException sqle1 ) {
+        sqle1.printStackTrace();
+      }
+    }
+    return result;
+}
+
+/**
+ * metodo che restituisce il numero degli iscritti alla palestra
+ * @return
+ */
+public int getNumeroIscritti() {
+	Connection con = null;
+    Statement stm = null;
+    ResultSet rs = null;
+  int result = 0;
+    
+    try {
+      con = getConnection();
+      stm = con.createStatement();
+      rs = stm.executeQuery(MyQuery.getQcountStudenti());      
+      if( rs.next() ) {
+    	  result = rs.getInt(1);
+       
+      }
+
+    } catch( SQLException sqle ) { 
+      sqle.printStackTrace();
+
+    } finally { 
+      try {
+    	rs.close();
+    	stm.close();
         con.close();
       } catch( SQLException sqle1 ) {
         sqle1.printStackTrace();

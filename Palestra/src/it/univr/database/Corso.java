@@ -3,10 +3,12 @@ package it.univr.database;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * classe che rappresenta il corso
+ * @author Mago
+ *
+ */
 public class Corso {
-
-
-	// === Properties ============================================================
 
 	private int id;
 	private String nome_corso;
@@ -18,8 +20,6 @@ public class Corso {
 	private String tipo;
 	private String descrizione;
 
-
-	// === Methods ===============================================================
 
 	public Corso() {
 

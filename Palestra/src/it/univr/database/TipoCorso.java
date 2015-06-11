@@ -1,15 +1,17 @@
 package it.univr.database;
-
+/**
+ * classe che rappresenta le tipologie dei corsi
+ * @author Mago
+ *
+ */
 public class TipoCorso {
 
-	 // === Properties ============================================================
 
 
 	  private String nome;
 	  private String descrizione;
 	
 
-	  // === Methods ===============================================================
 
 	  public TipoCorso() {
 	  

@@ -2,6 +2,11 @@ package it.univr.database;
 
 import java.sql.Date;
 
+/**
+ * classe che rappresenta lo studente
+ * @author Mago
+ *
+ */
 public class Utente {
 	private String nome;
 	private String cognome;
@@ -10,6 +15,9 @@ public class Utente {
 	private String login;
 	private String password;
 	
+	/**
+	 * costruttore di default
+	 */
 	public Utente(){
 		this.nome = null;
 		this.cognome = null;
@@ -20,7 +28,15 @@ public class Utente {
 	}
 	
 	
-	
+	/**
+	 * costruttore personalizzato utlizzato dal simulatore
+	 * @param nome
+	 * @param cognome
+	 * @param dateRandom
+	 * @param mail
+	 * @param login
+	 * @param pwd
+	 */
 	public Utente(String nome, String cognome, java.util.Date dateRandom,
 			String mail, String login, String pwd) {
 		this.nome = nome;

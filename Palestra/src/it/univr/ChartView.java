@@ -25,7 +25,11 @@ import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 import org.primefaces.model.chart.ChartSeries;
- 
+ /**
+  * bean di supporto per la generazione del grafico
+  * @author Mago
+  *
+  */
 @ManagedBean
 public class ChartView implements Serializable {
  
@@ -66,16 +70,10 @@ public class ChartView implements Serializable {
 				corsi.set(rs.getString("nome"), rs.getInt("numero_iscritti"));
 
 			}
-//        ChartSeries girls = new ChartSeries();
-//        girls.setLabel("Girls");
-//        girls.set("2004", 52);
-//        girls.set("2005", 60);
-//        girls.set("2006", 110);
-//        girls.set("2007", 135);
-//        girls.set("2008", 120);
+
  
         model.addSeries(corsi);
-//        model.addSeries(girls);
+
          
         
 		} catch (ClassNotFoundException e) {
@@ -161,7 +159,7 @@ public class ChartView implements Serializable {
       			}
     
          
-        horizontalBarModel.setTitle("Horizontal and Stacked");
+        horizontalBarModel.setTitle("Iscrizioni ai corsi");
         horizontalBarModel.setLegendPosition("e");
         horizontalBarModel.setStacked(true);
          

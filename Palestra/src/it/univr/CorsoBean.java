@@ -8,17 +8,19 @@ import it.univr.database.Iscritti;
 import it.univr.database.Materiale;
 import it.univr.database.ProgrammazioneCorso;
 import it.univr.database.TipoCorso;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
+/**
+ * bean per la gestione dei corsi
+ * @author Mago
+ *
+ */
 @ManagedBean(name = "cb")
 @SessionScoped
 public class CorsoBean implements Serializable {
@@ -38,7 +40,6 @@ public class CorsoBean implements Serializable {
   private ArrayList<ProgrammazioneCorso> programmazioneCorso;
   private ArrayList<Materiale> materialeCorso;
   private Corso corsoSelezionato;
-//  private String nome;
   private String tipoCorso;
   
   
@@ -49,13 +50,6 @@ public class CorsoBean implements Serializable {
   public int getNumeroIscritti() {
 	return numeroIscritti;
 }
-
-
-
-
-
-  // === Methods ===============================================================
-
 
 
 public CorsoBean() {

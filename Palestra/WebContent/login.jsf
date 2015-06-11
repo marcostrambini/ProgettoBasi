@@ -3,7 +3,8 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
 
 
 
@@ -30,11 +31,24 @@
 					<table class="table table-bordered">
 						<tr>
 							<td>Login:</td>
-							<td><h:inputText value="#{user.email}" id="email" /></td>
+							<td><h:inputText value="#{user.email}" id="email"
+									required="true" 
+									requiredMessage="[indirizzo email obbligatorio]" 
+									validatorMessage="[indirizzo email non valido]">
+									<f:validateRegex
+										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+								</h:inputText></td>
+							<h:message for="email"></h:message>
 						</tr>
 						<tr>
 							<td>Password:</td>
-							<td><h:inputSecret value="#{user.password}" id="password" /></td>
+							<td><h:inputSecret value="#{user.password}" id="password"
+									required="true" 
+									requiredMessage="[password obbligatoria]" 
+									validatorMessage="[password non valida perchè troppo corta]">
+									<f:validateLength minimum="5" />
+								</h:inputSecret></td>
+							<h:message for="password"></h:message>
 						</tr>
 					</table>
 					<p>

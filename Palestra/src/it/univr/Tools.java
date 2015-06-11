@@ -12,8 +12,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * classe di utilità
+ * @author Mago
+ *
+ */
 public class Tools {
 
+	/**
+	 * Array contenente nomi propri femminili
+	 */
 	static String[] nomi_femminili = {"Agnese", "Alba","Alice","Anita","Alessandra","Anna","Arianna","Ambra",
 		"Azzurra","Angelica","Annalisa","Aria","Astrid","Ambrosia","Adelaide","Alexandra","Aurora","Barbara","Beatrice",
 		"Benedetta","Camilla","Candida","Carola","Cassandra","Cassiopea","Caterina","Celeste","Chantal","Clara",
@@ -28,7 +36,10 @@ public class Tools {
 		"Stella","Susanna","Teodora","Teresa","Valeria","Valerie","Vanessa","Venere","Vera","Veronica","Viola","Vittoria",
 		"Viviana","Wendy","Yasmine","Zoe"	};
 
-
+	
+	/**
+	 * Array contenente nomi propri maschili
+	 */
 	static String[] nomi_maschini = {"Aaron","Adam","Abraham","Agostino","Alessandro","Alessio","Amedeo",
 		"Antonio","Bartolomeo","Battista","Benedetto","Bernardo","Cesare","Claudio","Corrado","Cristopher",
 		"Daniele","Davide","Domenico","Edoardo","Efrem","Emanuele","Emiliano","Enrico","Ermes","Eros",
@@ -42,6 +53,9 @@ public class Tools {
 		"Silvestro","Simone","Sirio","Stefano","Teodoro","Thierry","Thomas","Tommaso","Umberto",
 		"Ulisse","Uribe","Valerio","Vincenzo","Vittorio","William",	};
 	
+	/**
+	 * Array contenente cognomi comuni
+	 */
 	static String[] cognomi = {"Agostini","Aiello","Albanese","Amato","Antonelli","Arena","Baldi","Barbieri",
 		"Barone","Basile","Battaglia","Bellini","Benedetti","Bernardi","Bianchi","Bianco","Brambilla",
 		"Bruni","Bruno","Calabrese","Caputo","Carbone","Caruso","Castelli","Catalano","Cattaneo","Cavallo",
@@ -60,24 +74,43 @@ public class Tools {
 		"Villa","Villani","Vitale","Vitali","Volpe","Zanetti"};
 
 
+	/**
+	 * metodo che ritorna un nome proprio femminile random
+	 * @return
+	 */
 	static String getNomeFemminile(){
 		double randNumber1 = Math.random();
 		int id = (int) (randNumber1 * nomi_femminili.length);
 		return nomi_femminili[id];
 	};
 	
+	/**
+	 * metodo che ritorna un nome proprio maschile random
+	 * @return
+	 */
 	static String getNomeMaschile(){
 		double randNumber1 = Math.random();
 		int id = (int) (randNumber1 * nomi_maschini.length);
 		return nomi_maschini[id];
 	};
 	
+	/**
+	 * metodo che ritorna un nome cognome comune random
+	 * @return
+	 */
 	static String getCognome(){
 		double randNumber1 = Math.random();
 		int id = (int) (randNumber1 * cognomi.length);
 		return cognomi[id];
 	};
 	
+	/**
+	 * metodo che ritorna un indirizzo mail con dominio a caso nella forma n.cognome
+	 * prende come parametri nome e cognome generati a random
+	 * @param nome
+	 * @param cognome
+	 * @return
+	 */
 	static String getMail(String nome, String cognome){
 		String [] domini = {"mail.it","mail.com","gmail.com","libero.it","tiscali.it","hotmail.it","alice.it","outlook.com","jegjeghede.org"};
 		double randNumber1 = Math.random();
@@ -86,16 +119,30 @@ public class Tools {
 		return nome.substring(0,1).toLowerCase()+"."+cognome.toLowerCase()+"@"+domini[id];
 	}
 	
+	/**
+	 * metodo che ritorna una login a random prendendo come parametri nome e cognome random
+	 * @param nome
+	 * @param cognome
+	 * @return
+	 */
 	static String getLogin(String nome, String cognome){
 		
 		return nome.substring(0,1).toLowerCase()+"."+cognome.toLowerCase();
 	}
 	
+	/**
+	 * metodo che ritorna la stringa "password" per l'attributo password di ogni utente
+	 * @return
+	 */
 	static String getPassword(){
 		return "password";
 	}
 	
-	
+	/**
+	 * metodo che ritorna una data di nascita a random tra il 1980 e il 2000
+	 * @return
+	 * @throws ParseException
+	 */
 	static java.util.Date getDateRandom() throws ParseException {
         GregorianCalendar gc = new GregorianCalendar();
         int start = 1980;
@@ -112,6 +159,11 @@ public class Tools {
 		return (java.util.Date) data;
     }
 	
+	/**
+	 * metodo che ritorna una data di iscrizione a random tra il 2014 e il 2015
+	 * @return
+	 * @throws ParseException
+	 */
 	static java.util.Date getDataIscrizioneRandom() throws ParseException {
         GregorianCalendar gc = new GregorianCalendar();
         int start = 2014;
@@ -128,10 +180,22 @@ public class Tools {
 		return (java.util.Date) data;
     }
 
+	/**
+	 * metodo di supporto per la generazione di date random tra due estremi
+	 * @param start
+	 * @param end
+	 * @return
+	 */
 	public static int randBetween(int start, int end) {
         return start + (int)Math.round(Math.random() * (end - start));
     }
 	
+	/**
+	 * metodo che srive una stringa in un determinato file passando il nome come parametro
+	 * @param nomeFile
+	 * @param parola
+	 * @throws FileNotFoundException
+	 */
 	static void scriviFile(String nomeFile, String parola)
 			throws FileNotFoundException {
 		FileOutputStream fos = new FileOutputStream(nomeFile, true);
@@ -140,12 +204,22 @@ public class Tools {
 		scrivi.close();
 	}
 	
+	/**
+	 * metodo che pulisce il contenuto di un file passando il nome come parametro
+	 * @param nomeFile
+	 * @throws FileNotFoundException
+	 */
 	static void clearFile(String nomeFile) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter(nomeFile);
 		pw.close();
 
 	}
 	
+	/**
+	 * metodo che crea un file passando il nome come parametro
+	 * @param nomeFile
+	 * @throws FileNotFoundException
+	 */
 	static void creaFile(String nomeFile) throws FileNotFoundException {
 		File file = new File(nomeFile);
 
@@ -163,6 +237,11 @@ public class Tools {
 		}
 	}
 	
+	/**
+	 * metodo che calcola l'eta attuale in base alla data di nascita
+	 * @param date
+	 * @return
+	 */
 	public static int getAge(java.util.Date date) {
 
 	    Calendar today = Calendar.getInstance();
@@ -191,6 +270,12 @@ public class Tools {
 	    return age;
 	}
 	
+	/**
+	 * metodo che scrive su file un array di stringe passato come parametro
+	 * @param nomeFile
+	 * @param parole
+	 * @throws FileNotFoundException
+	 */
 	public void scriviFile(String nomeFile, ArrayList<String> parole)
 			throws FileNotFoundException {
 

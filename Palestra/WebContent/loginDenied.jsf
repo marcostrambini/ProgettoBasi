@@ -24,7 +24,7 @@
 			<div class="col-md-8" style="padding:100px; color:red">
 				<h1>
 					<span class="glyphicon glyphicon-remove"></span> Accesso negato..
-					 <br /> hai sbagliato utente o password errati!
+					 <br />utente o password errati!
 				</h1>
 			</div>
 

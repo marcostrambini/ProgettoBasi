@@ -1,8 +1,12 @@
 package it.univr.database;
 
-import java.sql.Date;
-import java.util.List;
 
+
+/**
+ * classe che rappresenta il Docente
+ * @author Mago
+ *
+ */
 public class Docente {
 
 

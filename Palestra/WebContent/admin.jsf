@@ -10,17 +10,71 @@
 	
 	
 <h:head>
-	<title>Pagina Personale</title>
+	<title>Pagina Admin</title>
 
 </h:head>
 
 <h:body>
 
-<h3>Benvenuto nella tua pagina personale</h3>
+<h3>Benvenuto Marco</h3>
 
+<div  style="padding-top: 10px">
+			<div >
+			<h3>Totale degli utenti iscritti alla palestra: #{user.numeroStudenti }</h3>
+			<h4>Elenco degli iscritti:</h4>
+				<h:form>
+					<p:dataTable value="#{user.studenti}" var="i" >
 
-<p:chart type="bar" model="#{chartView.barModel}" style="height:300px"/>
+						<p:column>
+							<f:facet name="header">nome</f:facet>
+							#{i.nome}
+						</p:column>
+
+						<p:column >
+							<f:facet name="header"  >cognome</f:facet>
+							#{i.cognome}
+						</p:column>
+
+						<p:column >
+							<f:facet name="header"  >email</f:facet>
+							#{i.mail}
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">data di nascita</f:facet>
+							#{i.dn}
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</div>
+		</div>
+	<br/>	
+		<h:outputLink  value="file/ListaNomi.txt"><h:outputText value="Download lista nomi txt"></h:outputText></h:outputLink>
+		<br/>
+		<h:outputLink  value="file/ListaNomi.csv"><h:outputText value="Download lista nomi csv"></h:outputText></h:outputLink>
+<br/>
+<h3>Statistiche sulle Iscrizioni ai corsi</h3>
+
 <p:chart type="bar" model="#{chartView.horizontalBarModel}" style="height:600px"/>
+
+<div  style="padding:100px">
+		
+
+				<h:outputLink value="index.jsf">
+					<h2>
+						<span class="glyphicon glyphicon-home"></span>
+					</h2>Home</h:outputLink>
+		
+
+			
+
+				<h:outputLink value="login.jsf">
+					<h2>
+						<span class="glyphicon glyphicon-user"></span>
+					</h2>Login</h:outputLink>
+		
+
+		</div>
 
 
 
