@@ -1,6 +1,5 @@
 package it.univr.database;
 
-import it.univr.MyQuery;
 import it.univr.UserBean;
 
 import java.io.Serializable;

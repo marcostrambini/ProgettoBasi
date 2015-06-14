@@ -3,6 +3,7 @@ package it.univr;
 
 
 import it.univr.database.DataSource;
+import it.univr.database.MyQuery;
 
 import javax.annotation.PostConstruct;
 
@@ -20,6 +21,9 @@ import javax.faces.bean.ManagedBean;
 
 
 
+
+import javax.faces.bean.SessionScoped;
+
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
@@ -31,6 +35,7 @@ import org.primefaces.model.chart.ChartSeries;
   *
   */
 @ManagedBean
+
 public class ChartView implements Serializable {
  
     private BarChartModel barModel;
